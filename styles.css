@@ -1,0 +1,143 @@
+body {
+    font-family: "Open-Sans", sans-serif !important;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    line-height: 1.75em;
+}
+
+footer {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-top:auto;
+  padding:15px;
+  width:auto;
+  color:white;
+  background-color:#1D3461;
+}
+
+h1,h6 {
+  font-weight: 550;
+  color: #1D3461;
+}
+
+h2 {
+  font-weight: 550;
+  color: #3BB3C2;
+}
+/* Modify the nav bar*/    
+.navbar-dark {background-color: #1D3461 !important;}
+
+.navbar-nav .nav-link {color:white !important;}
+
+.nav-link, .navbar-brand {color:white !important;}
+
+.nav-link:hover{color:#E5BD06 !important;}
+
+.navbar-brand{
+    margin-right:0.25rem;
+}
+
+.navbar-brand img {
+    margin-right: 7.5px;
+    margin-left: 0px;
+}
+/* end navbar modifications */
+
+.card {
+  transition: transform .5s;
+  margin-bottom:2%;
+  border:none;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+/* general center in middle of page styling (add in addition to other bootstrap classes*/
+.vertical-center {
+    min-height: 100%;
+    min-height: 100vh; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+.registerForm {
+    margin-top:20px;
+  }
+
+.password-container {
+    position: relative;
+}
+
+/*eye toggle for password hide/show*/
+#eye {
+    position: absolute;
+    top: 20%;
+    right: 4%;
+    cursor: pointer;
+    color: lightgray;
+  }
+  #eye2 {
+    position: absolute;
+    top: 20%;
+    right: 4%;
+    cursor: pointer;
+    color: lightgray;
+  }
+
+  .centerContent {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+
+.subText {
+  color: #1153B1;
+  font-weight: 400;
+}
+
+
+a:hover {
+    text-decoration: none;
+    color: #E5BD06;
+  }
+
+.articlePrev {
+  width:400px;
+  padding:15px;
+  margin-bottom:1%;
+  background-color:rgb(229, 236, 238);
+  border-radius:4px;
+}
+
+.articlePrev p {
+  margin-bottom:0;
+  padding-top:3px;
+  padding-left:2px;
+  padding-right:2px;
+}
+
+.articleFull {
+  width:500px;
+  padding:15px;
+  margin-bottom:1%;
+  background-color:rgb(229, 236, 238);
+  border-radius:4px;
+}
+
+.articleFull p {
+  margin-bottom:0;
+  padding-top:3px;
+  padding-left:2px;
+  padding-right:2px;
+}
+
+.articlePrev a {
+  text-decoration: none; 
+  display: block;
+}
+
