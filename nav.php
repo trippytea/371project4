@@ -28,7 +28,7 @@
                 } else {
                     
                     ?>
-                    <a href="index.php" class="nav-item nav-link"><?=$_SESSION["name"];?></a>
+                    <a href="index.php" class="nav-item nav-link"><?=$_SESSION["email"];?></a>
                     <a href="logout.php" class="nav-item nav-link">Log Out</a>
                     <?php
                 }

@@ -76,14 +76,14 @@ h2 {
 /*eye toggle for password hide/show*/
 #eye {
     position: absolute;
-    top: 20%;
+    top: 65%;
     right: 4%;
     cursor: pointer;
     color: lightgray;
   }
   #eye2 {
     position: absolute;
-    top: 20%;
+    top: 65%;
     right: 4%;
     cursor: pointer;
     color: lightgray;

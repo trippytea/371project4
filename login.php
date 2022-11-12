@@ -1,13 +1,13 @@
 <?php 
 include('db.php'); //connect to database
-include('nav.php'); //mobile responsive nav-bar
+include('header.php'); //mobile responsive nav-bar
 #if username and password are submitted, create variables
-if (isset($_POST["name"]) && isset($_POST["password"])) {
-    $name = $_POST["name"];
+if (isset($_POST["email"]) && isset($_POST["password"])) {
+    $email = $_POST["email"];
     $password = $_POST["password"];
     
 #call function in db.php to validate the password
-if (is_password_correct($name, $password, $db)) {
+if (is_password_correct($email, $password, $db)) {
     #if existing session, destroy old and start new
     if (isset($_SESSION)) {
       session_destroy();
@@ -15,7 +15,7 @@ if (is_password_correct($name, $password, $db)) {
       session_start();
     }
     # if user and pass match, remember user info and redirect to home
-    $_SESSION["name"] = $name;   
+    $_SESSION["email"] = $email;   
     header("location: index.php");
   }
   
@@ -57,14 +57,15 @@ if (is_password_correct($name, $password, $db)) {
     <h1 class="mt-3 mb-3 centerContent ">User Login</h1>
     <?=$promptMessage()?> <!--call prompt message function-->            
         <div class="form-outline mb-2">
-            <input type="text" name="name" id="name" class="form-control form-control-lg"/>
-            <label class="form-label" for="name">Username</label>
+            <label class="form-label" for="email">Email</label>
+            <input type="text" name="email" id="email" class="form-control form-control-lg"/>
         </div>
 
         <div class="password-container form-outline mb-2">
+            <label class="form-label" for="password">Password</label>
             <input type="password" name="password" id="password" class="form-control form-control-lg" />
             <i class="fa-solid fa-eye" id="eye"></i>
-            <label class="form-label" for="password">Password</label>
+            
         </div>
             <button class="btn-primary btn-lg btn-block mb-3" type="submit" name='submit' value='Login'>Login</button>
             <br>Need an account?<a href="register.php" style="text-decoration:none;"> Sign up here</a>

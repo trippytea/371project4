@@ -1,8 +1,8 @@
 <?php 
 include 'db.php'; //connect to database
-include 'nav.php'; //nav-bar
+include 'header.php'; //nav-bar
 if (isset( $_POST['submit'] )) {
-    $name = $_POST['name'];
+    $email = $_POST['email'];
     $result = $db->query("SELECT username FROM users WHERE username = '$name'");
     if ($result == true) {
         $rows = mysqli_fetch_assoc($result); 
@@ -65,20 +65,33 @@ if (isset( $_POST['submit'] )) {
         <h1 class="mt-3 mb-3 centerContent ">Register User</h1>
         <?=$promptMessage()?> <!--call prompt message function-->
         <div class="form-outline mb-2">
-            <input type="text" name="name" id="name" class="form-control form-control-lg" required/>
-            <label class="form-label" for="name">Username</label>
+            <label class="form-label" for="fname">First Name</label>
+            <input type="text" name="fname" id="fname" class="form-control form-control-lg" required/>
+        </div>
+        <div class="form-outline mb-2">
+            <label class="form-label" for="lname">Last Name</label>
+            <input type="text" name="lname" id="lname" class="form-control form-control-lg" required/>
+        </div>
+        <div class="form-outline mb-2">
+            <label class="form-label" for="email">Email</label>
+            <input type="text" name="email" id="email" class="form-control form-control-lg" required/>
+        </div>
+
+        <div class="form-outline mb-2">
+            <label class="form-label" for="email">Confirm Email</label>
+            <input type="text" name="email_confirm" id="email" class="form-control form-control-lg" required/>
         </div>
 
         <div class="password-container form-outline mb-2">
+            <label class="form-label" for="password">Password</label>
             <input type="password" name="password" id="password" class="form-control form-control-lg" required/>
             <i class="fa-solid fa-eye" id="eye"></i>
-            <label class="form-label" for="password">Password</label>
         </div>
 
         <div class="password-container form-outline mb-2">
+            <label class="form-label" for="password_confirm">Confirm Password</label>
             <input type="password" name="password_confirm" id="password_confirm" class="form-control form-control-lg" required/>
             <i class="fa-solid fa-eye" id="eye2"></i>
-            <label class="form-label" for="password_confirm">Confirm Password</label>
         </div>
 
             <button class="btn-primary btn-lg btn-block mb-3" type="submit" name='submit' value='Login'>Register</button>
