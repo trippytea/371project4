@@ -1,5 +1,5 @@
 <?php
-$db = new mysqli('localhost', 'INFX371', 'P*ssword', 'wiki');
+$db = new mysqli('localhost', 'INFX371', 'P*ssword', 'social');
 
 if($db === false){
   die("ERROR: Could not connect. ". mysqli_connect_error());
@@ -8,16 +8,15 @@ if($db === false){
 #if no session, start an empty session
 if (!isset($_SESSION)) { session_start(); }
 
-
-function is_password_correct ($name, $password, $db) {
-    $inputName = ($name);
-    $result = $db->query("SELECT password FROM users WHERE username = '$inputName'");
+function is_password_correct ($email, $password, $db) {
+    $inputemail = ($email);
+    $result = $db->query("SELECT password FROM users WHERE email = '$inputemail'");
     $rows = mysqli_fetch_assoc($result); 
     if ($rows) {
       foreach ($rows as $hash) {
         return password_verify($password, $hash); #returns true
       }
-
+    
     } else {
       return FALSE;   # user not found
     }
@@ -25,7 +24,7 @@ function is_password_correct ($name, $password, $db) {
 
 #if $_SESSION['name'] is not set, redirect to login page
 function ensure_logged_in() {
-    if (!isset($_SESSION["name"])) {
+    if (!isset($_SESSION["user"])) {
       header("Location: login.php?loginReq");
       exit();
     }
@@ -37,6 +36,17 @@ $promptMessage = function() {
       $message = "Invalid credentials, please try again.";
       echo "<div class='alert alert-danger mt-3 mx-auto text-center' role='alert'>".$message."</div>";
   }
+
+  if (isset($_GET['emailError'])) {
+    $message = "Emails do not match.";
+    echo "<div class='alert alert-danger mt-3 mx-auto text-center' role='alert'>".$message."</div>";
+}
+
+if (isset($_GET['emailExists'])) {
+  $message = "Email already exists.";
+  echo "<div class='alert alert-danger mt-3 mx-auto text-center' role='alert'>".$message."</div>";
+}
+
   if (isset($_GET['errp'])) {
       $message = "Passwords do not match.";
       echo "<div class='alert alert-danger mt-3 mx-auto text-center' role='alert'>".$message."</div>";
@@ -50,23 +60,8 @@ $promptMessage = function() {
     echo "<div class='alert alert-success mt-3 mx-auto text-center' role='alert'>".$message."</div>";
 }
 
-  if (isset($_GET['articleAdded'])) {
-    $message = "Article added successfully!";
-    echo "<div class='alert alert-success mt-3 mx-auto text-center' role='alert'>".$message."</div>";
-  }
-
   if (isset($_GET['loginReq'])) {
     $message = "You must be logged in.";
     echo "<div class='alert alert-danger mt-3 mx-auto text-center' role='alert'>".$message."</div>";
   }
-
-  if (isset($_GET['articleError'])) {
-    $message = "Article added successfully!";
-    echo "<div class='alert alert-success mt-3 mx-auto text-center' role='alert'>".$message."</div>";
-  }
-  if (isset($_GET['updateteamsuccess'])) {
-    $message = "Article updated successfully!";
-    echo "<div class='alert alert-success mt-3 mx-auto text-center' role='alert'>".$message."</div>";
-  }
-  
 };
