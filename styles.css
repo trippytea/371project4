@@ -5,6 +5,7 @@ body {
     flex-direction: column;
     overflow-x: hidden;
     line-height: 1.75em;
+    background-color:#e9f6f1;
 }
 
 footer {
@@ -15,12 +16,12 @@ footer {
   padding:15px;
   width:auto;
   color:white;
-  background-color:#1D3461;
+  background-color:#254441;
 }
 
 h1,h6 {
   font-weight: 550;
-  color: #1D3461;
+  color: #254441;
 }
 
 h2 {
@@ -28,7 +29,7 @@ h2 {
   color: #3BB3C2;
 }
 /* Modify the nav bar*/    
-.navbar-dark {background-color: #1D3461 !important;}
+.navbar-dark {background-color: #254441 !important;}
 
 .navbar-nav .nav-link {color:white !important;}
 
@@ -106,38 +107,5 @@ a:hover {
     color: #E5BD06;
   }
 
-.articlePrev {
-  width:400px;
-  padding:15px;
-  margin-bottom:1%;
-  background-color:rgb(229, 236, 238);
-  border-radius:4px;
-}
 
-.articlePrev p {
-  margin-bottom:0;
-  padding-top:3px;
-  padding-left:2px;
-  padding-right:2px;
-}
-
-.articleFull {
-  width:500px;
-  padding:15px;
-  margin-bottom:1%;
-  background-color:rgb(229, 236, 238);
-  border-radius:4px;
-}
-
-.articleFull p {
-  margin-bottom:0;
-  padding-top:3px;
-  padding-left:2px;
-  padding-right:2px;
-}
-
-.articlePrev a {
-  text-decoration: none; 
-  display: block;
-}
 
