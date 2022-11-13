@@ -1,21 +1,39 @@
 <?php 
 include 'db.php'; //connect to database
-include 'header.php'; //nav-bar
+include 'nav.php'; //nav-bar
 if (isset( $_POST['submit'] )) {
-    $email = $_POST['email'];
-    $result = $db->query("SELECT username FROM users WHERE username = '$name'");
-    if ($result == true) {
-        $rows = mysqli_fetch_assoc($result); 
+    $email = trim($_POST['email']);
+    $confirmEmail = trim($_POST['confirmEmail']);
+    $firstName = trim($_POST['fname']);
+    $lastName = trim($_POST['lname']);
+    $username = trim($_POST['user']);    
 
+    if ($email != $confirmEmail) {
+        header("location: register.php?emailError");
+        exit();
+    }
+
+    $emailresult = $db->query("SELECT email FROM users WHERE email = '$email'");
+    if ($emailresult) {
+        $rows = mysqli_fetch_assoc($emailresult);
+        if ($rows) {
+        header("location: register.php?emailExists");
+        exit();
+    }
+    }
+
+    $result = $db->query("SELECT username FROM users WHERE username = '$username'");
+    if ($result) {
+        $rows = mysqli_fetch_assoc($result); 
         if (!$rows) {
+            
             $password = $_POST['password'];
             $password_confirm = $_POST['password_confirm'];
-        
+
             if ($password == $password_confirm) {
                 $password_hash = password_hash($password_confirm, PASSWORD_DEFAULT);
-        
-                $registerPrep = $db -> prepare("INSERT INTO users(username, password) VALUES (?, ?)");
-                $registerPrep -> bind_param("ss", $name, $password_hash);
+                $registerPrep = $db -> prepare("INSERT INTO users(username, fName, lName, email, password) VALUES (?, ?, ?, ?, ?)");
+                $registerPrep -> bind_param("sssss", $username, $firstName, $lastName, $email, $password_hash);
                 $registerPrep -> execute();
                 header("location: register.php?newUserSuccess");
                 exit();
@@ -31,7 +49,7 @@ if (isset( $_POST['submit'] )) {
             exit();
         }
     }
-}
+}       
 ?> <!--php ends-->
 
 <!DOCTYPE html>
@@ -58,28 +76,32 @@ if (isset( $_POST['submit'] )) {
 </head>
 
 <body>
-<img src="images\w-logo.png" class="mx-auto d-flex pt-5 pb-0" width="110px" height="auto" alt="wiki-woo logo">
+<img src="images\w-logo.png" class="mx-auto d-flex pt-5 pb-0" width="110px" height="auto" alt="logo">
     <div class="d-flex justify-content-center mx-auto">
 
     <form method="post" class="registerForm">
         <h1 class="mt-3 mb-3 centerContent ">Register User</h1>
         <?=$promptMessage()?> <!--call prompt message function-->
         <div class="form-outline mb-2">
+            <label class="form-label" for="user">Username</label>
+            <input type="text" name="user" id="user" class="form-control form-control-lg" minlength='2' maxlength='50' required/>
+        </div>
+        <div class="form-outline mb-2">
             <label class="form-label" for="fname">First Name</label>
-            <input type="text" name="fname" id="fname" class="form-control form-control-lg" required/>
+            <input type="text" name="fname" id="fname" class="form-control form-control-lg" minlength='2' maxlength='50' required/>
         </div>
         <div class="form-outline mb-2">
             <label class="form-label" for="lname">Last Name</label>
-            <input type="text" name="lname" id="lname" class="form-control form-control-lg" required/>
+            <input type="text" name="lname" id="lname" class="form-control form-control-lg" minlength='2' maxlength='50' required/>
         </div>
         <div class="form-outline mb-2">
             <label class="form-label" for="email">Email</label>
-            <input type="text" name="email" id="email" class="form-control form-control-lg" required/>
+            <input type="text" name="email" id="email" class="form-control form-control-lg" minlength='2' maxlength='50' required/>
         </div>
 
         <div class="form-outline mb-2">
             <label class="form-label" for="email">Confirm Email</label>
-            <input type="text" name="email_confirm" id="email" class="form-control form-control-lg" required/>
+            <input type="text" name="confirmEmail" id="confirmEmail" class="form-control form-control-lg" minlength='2' maxlength='50' required/>
         </div>
 
         <div class="password-container form-outline mb-2">
@@ -94,7 +116,7 @@ if (isset( $_POST['submit'] )) {
             <i class="fa-solid fa-eye" id="eye2"></i>
         </div>
 
-            <button class="btn-primary btn-lg btn-block mb-3" type="submit" name='submit' value='Login'>Register</button>
+            <button class="btn-primary btn-lg btn-block mb-3 mt-2" type="submit" name='submit' value='Login'>Register</button>
             <br><a href="login.php" style="text-decoration:none;"> Click here to log in</a>
        
         </form>
@@ -136,5 +158,5 @@ if (isset( $_POST['submit'] )) {
 	<!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
-<footer class="centerContent">Copyright &copy 2022 Wiki-Woo!</footer>
+<footer class="centerContent">Copyright &copy 2022 Social Name???</footer>
 </html>
