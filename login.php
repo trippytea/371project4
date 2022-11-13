@@ -1,11 +1,15 @@
 <?php 
 include('db.php'); //connect to database
-include('header.php'); //mobile responsive nav-bar
+include('nav.php'); //mobile responsive nav-bar
 #if username and password are submitted, create variables
 if (isset($_POST["email"]) && isset($_POST["password"])) {
     $email = $_POST["email"];
     $password = $_POST["password"];
-    
+    $result = $db->query("SELECT username FROM users WHERE email = '$email'");
+    $resultQ = mysqli_fetch_assoc($result);
+    $username = $resultQ['username'];
+    echo $username;
+
 #call function in db.php to validate the password
 if (is_password_correct($email, $password, $db)) {
     #if existing session, destroy old and start new
@@ -15,8 +19,8 @@ if (is_password_correct($email, $password, $db)) {
       session_start();
     }
     # if user and pass match, remember user info and redirect to home
-    $_SESSION["email"] = $email;   
-    header("location: index.php");
+    $_SESSION['user'] = $username;
+    header ("location: index.php"); 
   }
   
   #else reload login page with error message
@@ -50,7 +54,7 @@ if (is_password_correct($email, $password, $db)) {
     <link rel="stylesheet" type="text/css" href="styles.css";>
 </head>
 <body>
-<img src="images\w-logo.png" class="mx-auto d-flex pt-5 pb-0" width="110px" height="auto" alt="wiki-woo logo">
+<img src="images\w-logo.png" class="mx-auto d-flex pt-5 pb-0" width="110px" height="auto" alt="logo">
     <div class="d-flex justify-content-center mx-auto">
 
     <form method="post">
@@ -67,7 +71,7 @@ if (is_password_correct($email, $password, $db)) {
             <i class="fa-solid fa-eye" id="eye"></i>
             
         </div>
-            <button class="btn-primary btn-lg btn-block mb-3" type="submit" name='submit' value='Login'>Login</button>
+            <button class="btn-primary btn-lg btn-block mb-3 mt-2" type="submit" name='submit' value='Login'>Login</button>
             <br>Need an account?<a href="register.php" style="text-decoration:none;"> Sign up here</a>
         </form>
        
@@ -92,5 +96,5 @@ if (is_password_correct($email, $password, $db)) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
-<footer class="centerContent">Copyright &copy 2022 Wiki-Woo!</footer>
+<footer class="centerContent">Copyright &copy 2022 Social Name???</footer>
 </html>
