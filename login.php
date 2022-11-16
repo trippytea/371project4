@@ -54,7 +54,7 @@ if (is_password_correct($email, $password, $db)) {
     <link rel="stylesheet" type="text/css" href="styles.css";>
 </head>
 <body>
-<img src="images\w-logo.png" class="mx-auto d-flex pt-5 pb-0" width="110px" height="auto" alt="logo">
+<img src="images\cave_logo.png" class="mx-auto d-flex pt-5 pb-0" width="110px" height="auto" alt="logo">
     <div class="d-flex justify-content-center mx-auto">
 
     <form method="post">
@@ -96,5 +96,5 @@ if (is_password_correct($email, $password, $db)) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
-<footer class="centerContent">Copyright &copy 2022 Social Name???</footer>
+<footer class="centerContent">Copyright &copy 2022 The Goblin Den</footer>
 </html>
