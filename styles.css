@@ -8,6 +8,10 @@ body {
     background-color:#e9f6f1;
 }
 
+.btn-primary {
+  background-color: #254441 !important;
+  border-color: #254441;
+}
 footer {
   display:flex;
   align-items:center;
