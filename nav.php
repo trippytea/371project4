@@ -15,9 +15,21 @@
                 <ul class="navbar-nav">
                     <a href="index.php" class="nav-item nav-link">Home</a>
                 </div>
-                <div class="navbar-nav ms-auto">         
-                    <a href="register.php" class="nav-item nav-link">Register</a>     	
-                    <a href="logout.php" class="nav-item nav-link">Log Out</a>
+                <div class="navbar-nav ms-auto">    
+                    <?php 
+                    if (!isset($_SESSION["user"])) {
+                        ?>
+                        <a href="register.php" class="nav-item nav-link">Register</a>  
+                        <a href="login.php" class="nav-item nav-link">Log In</a>
+                        <?php
+                    } else if (isset($_SESSION["user"])) {
+                    
+                        ?>
+                        <a href="index.php" class="nav-item nav-link"><?=$_SESSION["user"]?></a>
+                        <a href="logout.php" class="nav-item nav-link">Log Out</a>
+                        <?php
+                    }
+                    ?>        	
                 </div>
             </div>
         </div>
