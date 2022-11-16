@@ -9,6 +9,15 @@ CREATE TABLE users (
    	PRIMARY KEY (username)
 ); 
 
+CREATE TABLE friends (
+    friendId int NOT NULL AUTO_INCREMENT,
+    friendUsername VARCHAR(50) NOT NULL,
+    username VARCHAR(50) NOT NULL,
+    PRIMARY KEY(friendId),
+    FOREIGN KEY (username) REFERENCES users(username),
+    FOREIGN KEY (friendUsername) REFERENCES users(username)
+); 
+
 CREATE TABLE post (
     postId int NOT NULL AUTO_INCREMENT,
     postContent LONGTEXT NOT NULL,
