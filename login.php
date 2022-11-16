@@ -54,7 +54,7 @@ if (is_password_correct($email, $password, $db)) {
     <link rel="stylesheet" type="text/css" href="styles.css";>
 </head>
 <body>
-<img src="images\w-logo.png" class="mx-auto d-flex pt-5 pb-0" width="110px" height="auto" alt="logo">
+<img src="images\cave_logo.png" class="mx-auto d-flex pt-5 pb-0" width="110px" height="auto" alt="logo">
     <div class="d-flex justify-content-center mx-auto">
 
     <form method="post">
