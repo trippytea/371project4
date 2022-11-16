@@ -31,9 +31,14 @@ if (isset( $_POST['submit'] )) {
             $password_confirm = $_POST['password_confirm'];
 
             if ($password == $password_confirm) {
+
+                $goblinPics = array("golbin1.png", "goblin2.png", "goblin3.png", "goblin4.png", "goblin5.png");
+                $randomIndex = rand(0, 4);
+                $goblin = $goblinPics[$randomIndex];
+                
                 $password_hash = password_hash($password_confirm, PASSWORD_DEFAULT);
-                $registerPrep = $db -> prepare("INSERT INTO users(username, fName, lName, email, password) VALUES (?, ?, ?, ?, ?)");
-                $registerPrep -> bind_param("sssss", $username, $firstName, $lastName, $email, $password_hash);
+                $registerPrep = $db -> prepare("INSERT INTO users(username, fName, lName, email, password, profilePic) VALUES (?, ?, ?, ?, ?, ?)");
+                $registerPrep -> bind_param("ssssss", $username, $firstName, $lastName, $email, $password_hash, $goblin);
                 $registerPrep -> execute();
                 header("location: register.php?newUserSuccess");
                 exit();
