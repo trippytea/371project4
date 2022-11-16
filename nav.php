@@ -2,7 +2,7 @@
 	<!--navigation bar start-->
     <nav class="navbar navbar-expand-lg navbar-dark bg dark">
         <div class="container-fluid">
-            <a href="admin-home.php" class="navbar-brand"><img src="images\Cajun Rush Logo-white.png" width="auto" height="30px"></a>
+            <a href="index.php" class="navbar-brand"><img src="images\Goblin_logo_white.svg" width="auto" height="30px"></a>
 
             <!--navbar toggle icon-->
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
