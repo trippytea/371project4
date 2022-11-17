@@ -27,15 +27,14 @@
                     } else if (isset($_SESSION["user"])) {
                     
                         ?>
-                    
-                        <a href="index.php" class="nav-item nav-link"><?=$_SESSION["user"]?></a>
-                        <a href="index.php" class="nav-item nav-link"><i class="fa-sharp fa-solid fa-house" style="color:white;padding:5px;"></i></a>
-                        <a href="index.php" class="nav-item nav-link"><i class="fa-solid fa-envelope" style="color:white;padding:5px;"></i></a>
-                        <a href="index.php" class="nav-item nav-link"><i class="fa-solid fa-bell" style="color:white;padding:5px;"></i></a>
-                        <a href="index.php" class="nav-item nav-link"><i class="fa-solid fa-user" style="color:white;padding:5px;"></i></a>
-                        <a href="index.php" class="nav-item nav-link"><i class="fa-solid fa-gear" style="color:white;padding:5px;"></i></a>
-                        <a href="index.php" class="nav-item nav-link"><i class="fa-solid fa-user-group" style="color:white;padding:5px;"></i></a>
-                        <a href="logout.php" class="nav-item nav-link"><i class="fa-solid fa-square-up-right" style="color:white;padding:5px;"></i></a>
+                        <a href="index.php" class="nav-item nav-link"><i class="fa-sharp fa-solid fa-house" style="color:#e9f6f1;padding:5px;"></i></a>
+                        <a href="index.php" class="nav-item nav-link"><i class="fa-solid fa-envelope" style="color:#e9f6f1;padding:5px;"></i></a>
+                        <a href="index.php" class="nav-item nav-link"><i class="fa-solid fa-bell" style="color:#e9f6f1;padding:5px;"></i></a>
+                        <a href="index.php" class="nav-item nav-link"><i class="fa-solid fa-user" style="color:#e9f6f1;padding:5px;"></i></a>
+                        <a href="index.php" class="nav-item nav-link"><i class="fa-solid fa-gear" style="color:#e9f6f1;padding:5px;"></i></a>
+                        <a href="index.php" class="nav-item nav-link"><i class="fa-solid fa-user-group" style="color:#e9f6f1;padding:5px;"></i></a>
+                        <a href="logout.php" class="nav-item nav-link"><i class="fa-solid fa-square-up-right" style="color:#e9f6f1;padding:5px;"></i></a>
+                        <a href="index.php" class="nav-item nav-link user"><?=$_SESSION["user"]?></a>
                         <?php
                     }
                     ?>        	
