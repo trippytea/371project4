@@ -40,9 +40,9 @@ CREATE TABLE comment (
 CREATE TABLE postlike (
     likeId int NOT NULL AUTO_INCREMENT,
     postId int NOT NULL,
-    username VARCHAR(50) NOT NULL,
+    likedBy VARCHAR(50) NOT NULL,
     PRIMARY KEY(likeId),
-    FOREIGN KEY (username) REFERENCES users(username),
+    FOREIGN KEY (likedBy) REFERENCES users(username),
     FOREIGN KEY (postId) REFERENCES post(postId)
 );
 

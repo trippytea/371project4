@@ -32,7 +32,7 @@ if (isset( $_POST['submit'] )) {
 
             if ($password == $password_confirm) {
 
-                $goblinPics = array("golbin1.png", "goblin2.png", "goblin3.png", "goblin4.png", "goblin5.png");
+                $goblinPics = array("goblin1.png", "goblin2.png", "goblin3.png", "goblin4.png", "goblin5.png");
                 $randomIndex = rand(0, 4);
                 $goblin = $goblinPics[$randomIndex];
                 
