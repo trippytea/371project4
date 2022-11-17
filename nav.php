@@ -1,4 +1,5 @@
 <header>    
+<script src="https://kit.fontawesome.com/8b7ae18a46.js" crossorigin="anonymous"></script>
 	<!--navigation bar start-->
     <nav class="navbar navbar-expand-lg navbar-dark bg dark">
         <div class="container-fluid">
@@ -13,7 +14,8 @@
             <div class="collapse navbar-collapse " id="navbarCollapse">
                 <div class="navbar-nav">
                 <ul class="navbar-nav">
-                    <a href="index.php" class="nav-item nav-link">Home</a>
+                  
+                    
                 </div>
                 <div class="navbar-nav ms-auto">    
                     <?php 
@@ -25,7 +27,15 @@
                     } else if (isset($_SESSION["user"])) {
                     
                         ?>
+                    
                         <a href="index.php" class="nav-item nav-link"><?=$_SESSION["user"]?></a>
+                        <a href="index.php" class="nav-item nav-link"><i class="fa-sharp fa-solid fa-house" style="color:white;padding:5px;"></i></a>
+                        <a href="index.php" class="nav-item nav-link"><i class="fa-solid fa-envelope" style="color:white;padding:5px;"></i></a>
+                        <a href="index.php" class="nav-item nav-link"><i class="fa-solid fa-bell" style="color:white;padding:5px;"></i></a>
+                        <a href="index.php" class="nav-item nav-link"><i class="fa-solid fa-user" style="color:white;padding:5px;"></i></a>
+                        <a href="index.php" class="nav-item nav-link"><i class="fa-solid fa-gear" style="color:white;padding:5px;"></i></a>
+                        <a href="index.php" class="nav-item nav-link"><i class="fa-solid fa-user-group" style="color:white;padding:5px;"></i></a>
+                        
                         <a href="logout.php" class="nav-item nav-link">Log Out</a>
                         <?php
                     }
