@@ -95,8 +95,17 @@ if ($userresult) {
         </div> <!--col end-->
 
 	<!--user and friend post section-->
+
 	<div class="col-12 col-md-6 col-lg-8 order-2 order-md-2 order-lg-2 centerContent">
 		<div class="card mt-0 mt-lg-2">
+		<div class="card-body">
+				<span>
+					<form action="index.php"> 
+						<input type="text" name='newPost' id='newPost' class="card-body" style="width: 700px;" placeholder="Got something to say?">
+						<input type="button" value="Post" style="height:64px;width:100px;background-color:#254441;color:white;">
+					</form>
+				</span>
+			</div>
 			<div class="card-body">
 				<span>this is a long text test to see how wide the div can get ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
 			</div>
