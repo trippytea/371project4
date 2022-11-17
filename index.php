@@ -40,6 +40,7 @@ if ($picresult) {
     }
 }
 
+# get first and last name
 $nameresult = $db->query("SELECT * FROM users WHERE username = '$name'");
 if ($nameresult) {
     $rows = mysqli_fetch_assoc($nameresult);
@@ -59,7 +60,6 @@ if ($postresult) {
 }
 
 # get like count
-
 $userresult = $db->query("SELECT postId FROM post WHERE username = '$name'");
 $likeTotal = 0;
 if ($userresult) {
@@ -80,10 +80,10 @@ if ($userresult) {
 ?>
 
 <div class="container mt-4 mt-lg-5">
-    <div class="row">
-		<!--coaching resources-->
+    <div class="row" style="">
+		<!--user profile section-->
 		<div class="col-12 col-md-6 col-lg-4 order-1 order-md-1 order-lg-1 mb-2  centerContent">
-            <div class="card mt-0 mt-lg-2" style="width: 50rem;">
+            <div class="card mt-0 mt-lg-2" style="width: 20rem;">
 				<div class="card-body">
 					<img style="margin-top:-40px;" src="images\<?=$pic?>" class="" width="110px" height="auto" alt="goblin">
 					<p class="" style="color: #1D3461; white-space:nowrap; display:inline-block;"><strong><?=$firstName?> <?=$lastName?></strong><br>
@@ -94,22 +94,17 @@ if ($userresult) {
         	</div>
         </div> <!--col end-->
 
-	<!--view schedule-->
-	<div class="col-12 col-md-6 col-lg-4 order-2 order-md-2 order-lg-2 mb-2 px-4 centerContent">
-		<div class="card mt-0 mt-lg-2" style="width: 7rem;">
-			<a href="view-schedules.php"><img class="card-img-top" src='images/view-schedule.svg' alt="view schedules"></a>
-		<div class="card-body">
-			<h5 class="centerContent" style="color: #1D3461; white-space:nowrap;"><strong>View Schedules</strong></h5>
-		</div>
+	<!--user and friend post section-->
+	<div class="col-12 col-md-6 col-lg-8 order-2 order-md-2 order-lg-2 centerContent">
+		<div class="card mt-0 mt-lg-2">
+			<div class="card-body">
+				<span>this is a long text test to see how wide the div can get ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+			</div>
 		</div>
 	</div> <!--col end-->
 
-
-	<div class="col-auto order-3 order-md-3 order-lg-3 mb-0 mt-3 mt-lg-4">
-
+	<!-- row ends -->
 	</div>
-<!-- row ends -->
-</div>
 </div> <!--container end-->
 
 
