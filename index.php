@@ -83,11 +83,10 @@ if ($userresult) {
     <div class="row">
 		<!--user profile section-->
 		<div class="col-12 col-md-6 col-lg-4 order-1 order-md-1 order-lg-1 mb-2  centerContent">
-            <div class="card mt-0 mt-lg-2" style="width: 18rem; height: 10rem;">
-			<a href='user-home.php' style='text-decoration:none;'>
-				<div class="card-body mt-2">
-					<img style="margin-top:-40px; margin-right:5%; margin-left:5%;" src="images\<?=$pic?>" class="" width="110px" height="auto" alt="goblin">
-					<p class="" style="color: #1D3461; white-space:nowrap; display:inline-block;"><strong><?=$_SESSION['user']?></strong><br>
+            <div class="card mt-0 mt-lg-2" style="width: 20rem; height: 135px;">
+				<div class="card-body" style="height: 110px; felx-grow: 0;">
+					<img style="margin-top:-40px;" src="images\<?=$pic?>" class="" width="110px" height="auto" alt="goblin">
+					<p class="" style="color: #1D3461; white-space:nowrap; display:inline-block;"><strong><?=$firstName?> <?=$lastName?></strong><br>
 					<strong>Posts: <?=$postTotal?></strong><br>
 					<strong>Likes: <?=$likeTotal?></strong>
 					</p>
