@@ -11,6 +11,7 @@ body {
 .btn-primary {
   background-color: #254441 !important;
   border-color: #254441;
+  
 }
 
 footer {
@@ -24,15 +25,11 @@ footer {
   background-color:#254441;
 }
 
-h1,h6 {
+h1,h2,h6 {
   font-weight: 550;
   color: #254441;
 }
 
-h2 {
-  font-weight: 550;
-  color: #3BB3C2;
-}
 /* Modify the nav bar*/    
 .navbar-dark {background-color: #254441 !important;}
 
@@ -54,6 +51,18 @@ h2 {
 
 .postBox {
   background-color:white;
+}
+
+.userBox {
+  background-image: url("images/dirt.png");
+  background-position: 55% 8%;
+  border: 5.75px solid rgb(203, 198, 161) !important;
+}
+
+.profileCard {
+  margin-top:-42px; 
+  margin-left:8px; 
+
 }
 
 .card {
