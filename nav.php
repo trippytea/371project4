@@ -34,7 +34,7 @@
                         <a href="index.php" class="nav-item nav-link"><i class="fa-solid fa-gear" style="color:#e9f6f1;padding:5px;"></i></a>
                         <a href="index.php" class="nav-item nav-link"><i class="fa-solid fa-user-group" style="color:#e9f6f1;padding:5px;"></i></a>
                         <a href="logout.php" class="nav-item nav-link"><i class="fa-solid fa-square-up-right" style="color:#e9f6f1;padding:5px;"></i></a>
-                        <a href="index.php" class="nav-item nav-link user"><?=$_SESSION["user"]?></a>
+                        <a href="user-home.php" class="nav-item nav-link user"><?=$_SESSION["user"]?></a>
                         <?php
                     }
                     ?>        	
