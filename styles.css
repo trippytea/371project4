@@ -75,6 +75,9 @@ h1,h2,h6 {
   transform: scale(1.05);
 }
 
+.fa-solid:hover {
+  color:#E5BD06 !important;
+}
 /* general center in middle of page styling (add in addition to other bootstrap classes*/
 .vertical-center {
     min-height: 100%;
