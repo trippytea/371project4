@@ -76,20 +76,20 @@ if ($userresult) {
     	}
     }
 }
-
 ?>
 
 <div class="container mt-4 mt-lg-5">
     <div class="row">
 		<!--user profile section-->
 		<div class="col-12 col-md-6 col-lg-4 order-1 order-md-1 order-lg-1 mb-2  centerContent">
-            <div class="card mt-0 mt-lg-2" style="width: 18rem; height: 10rem;">
+            <div class="card mt-0 mt-lg-2 userBox" style="width: 18rem; height: 9.85rem;">
 			<a href='user-home.php' style='text-decoration:none;'>
-				<div class="card-body mt-2">
-					<img style="margin-top:-40px; margin-right:5%; margin-left:5%;" src="images\<?=$pic?>" class="" width="110px" height="auto" alt="goblin">
-					<p class="" style="color: #1D3461; white-space:nowrap; display:inline-block;"><strong><?=$_SESSION['user']?></strong><br>
-					<strong>Posts: <?=$postTotal?></strong><br>
-					<strong>Likes: <?=$likeTotal?></strong>
+				<div class="card-body mt-3 ">
+					<img class='profileCard' src="images\<?=$pic?>" class="" width="112px" height="auto" alt="goblin">
+					<p class="mt-2 ml-2" style="color: #e9f6f1; letter-spacing:.75px; margin-left:auto; white-space:nowrap; display:inline-block;">
+						<strong><?=$_SESSION['user']?></strong><br>
+						<strong>Posts: <?=$postTotal?></strong><br>
+						<strong>Likes: <?=$likeTotal?></strong>
 					</p>
 				</div>
 			</a>
@@ -99,8 +99,9 @@ if ($userresult) {
 	<!--user and friend post section-->
 
 	<div class="col-12 col-md-6 col-lg-8 order-2 order-md-2 order-lg-2 centerContent postArea">
-		<div class="mt-0 mt-lg-2">
+		<div>
 		<div class="card-body">
+		<h2>Create Post </h2>
 					<form action="index.php" class='text-end'> 
 						<input type="text" name='newPost' id='newPost' class="card-body w-100"  placeholder="Got something to say?">	
 						<button class="btn-primary btn-lg btn-block mb-3 mt-2 " type="submit" name='submit' value='Post'>Post</button>
