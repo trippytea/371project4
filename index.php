@@ -95,12 +95,17 @@ if (isset ($_POST['submit'])) {
             <div class="card mt-0 mt-lg-2 userBox" style="width: 18rem; height: 9.85rem;">
 			<a href='user-home.php' style='text-decoration:none;'>
 				<div class="card-body mt-3 ">
-					<img class='profileCard' src="images\<?=$pic?>" class="" width="112px" height="auto" alt="goblin">
-					<p class="mt-2 ml-2" style="color: #e9f6f1; letter-spacing:.75px; margin-left:auto; white-space:nowrap; display:inline-block;">
-						<strong><?=$_SESSION['user']?></strong><br>
-						<strong>Posts: <?=$postTotal?></strong><br>
-						<strong>Likes: <?=$likeTotal?></strong>
-					</p>
+				<span>
+					<img class='profileCard' src="images\<?=$pic?>" class="" height="auto" width="112px"  alt="goblin" style="margin-top:-6px;">
+					<div style="float:right;"> 
+						<p class="mt-2 ml-2" style="color: #e9f6f1; letter-spacing:.75px; margin-left:auto; white-space:nowrap; display:inline-block;">
+
+							<strong><?=$_SESSION['user']?></strong><br>
+							<strong>Posts: <?=$postTotal?></strong><br>
+							<strong>Likes: <?=$likeTotal?></strong>
+						</p>
+					</div>
+					</span>
 				</div>
 			</a>
         	</div>
@@ -117,8 +122,19 @@ if (isset ($_POST['submit'])) {
 						<button class="btn-primary btn-lg btn-block mb-3 mt-2 " type="submit" name='submit'>Post</button>
 					</form>
 			</div>
-			<div class="card-body postBox p-4"> <!--post styling-->
-				<span>this is a long text test to see how wide the div can get ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+			<div class="card-body postBox p-4" style="width:800px;"> <!--post styling-->
+				<span>
+					<img class='profileCard' src="images\<?=$pic?>" class="" width="112px" height="auto" alt="goblin">
+					<p class="mt-2 ml-2" style="color: #254441; letter-spacing:.75px; margin-left:auto; white-space:nowrap; display:inline-block;">
+
+						<strong><?=$_SESSION['user']?></strong><br>
+						<strong>Posts: <?=$postTotal?></strong><br>
+						<strong>Likes: <?=$likeTotal?></strong>
+					</p>
+					
+					<h4 style="float:right;margin-right:300px;">Post will go here</h4>
+					
+				</span>
 			</div>
 		</div>
 	</div> <!--col end-->
