@@ -30,7 +30,36 @@ function ensure_logged_in() {
     }
   }
 
-  #message to display if login credentials do not match database, password does not match, or registration is successful
+  function calculate_time_span($date){
+    date_default_timezone_set("America/Chicago");
+    $datetime1 = new DateTime(); // Today's Date/Time
+    $datetime2 = new DateTime($date);
+    $interval = $datetime1->diff($datetime2);
+    $days = $interval->format("%D");
+    $hours = $interval->format("%H") - 12;
+    $minutes = $interval->format("%I");
+
+    if ($days < 1 && $hours < 1 && $minutes < 1) {
+      return "Less than a minute ago.";
+    }
+
+    elseif ($days < 1 && $hours < 1 && $minutes == 1) {
+      return "1 minute ago.";
+    }
+    
+    elseif ($days < 1 && $hours < 1) {
+        return $minutes." minutes ago.";
+    }
+    elseif ($days <1 && $hours >= 1) {
+      return $hours ." hours ".$minutes." minutes ago.";
+    }
+    else {
+      return $days." days ago.";
+    }
+}
+
+
+#message to display if login credentials do not match database, password does not match, or registration is successful
 $promptMessage = function() {
   if (isset($_GET['err'])) {
       $message = "Invalid credentials, please try again.";
