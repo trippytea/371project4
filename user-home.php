@@ -27,8 +27,6 @@ ensure_logged_in();
 	<!-- custom CSS Stylesheet -->	  
     <link rel="stylesheet" type="text/css" href="styles.css";>
 </head>
-<body>
-
 <?php
 # get profile pic
 $name = $_SESSION['user'];
@@ -77,9 +75,32 @@ if ($userresult) {
     }
 }
 
-?>
+#insert post from submission
+if (isset ($_POST['submit'])) {
+	$newPost = $_POST['newPost'];
+	$postStmnt = $db->prepare("INSERT INTO post(postContent, username) VALUES (?,?)");
+	$postStmnt->bind_param("ss",$newPost,$_SESSION['user']);
+	$postStmnt->execute();
+	header("location: index.php");
+	exit();
+}
 
-<div class="container mt-4 mt-lg-5">
+$userPosts = function($db) {
+	$postQ = mysqli_query($db, "SELECT * FROM post WHERE username = '$_SESSION[user]' ORDER BY postId DESC");
+	while($row=mysqli_fetch_array($postQ)){
+		
+		echo "
+				<div class='card-body p-4 w-75'>
+				".calculate_time_span($row['date'])."<br>
+						$row[postContent] 
+				</div>";
+		}
+}
+
+
+?>
+<body>
+<div class="container mt-4 mt-lg-5 mx-auto">
     <div class="row">
 		<!--user profile section-->
 		<div class="col-12 col-md-6 col-lg-4 order-1 order-md-1 order-lg-1 mb-2  centerContent">
@@ -97,14 +118,12 @@ if ($userresult) {
         	</div>
         </div> <!--col end-->
 
-	<!--post section-->
-
-	<div class="col-12 col-md-6 col-lg-8 order-2 order-md-2 order-lg-2 centerContent postArea">
-            <div class="card-body postBox p-4"> <!--post styling-->
-				<p>Post history stuff will go here</p>
-			</div>
-	</div> <!--col end-->
-
+		<!--post section-->
+		<div class='col-12 col-md-6 col-lg-8 order-2 order-md-2 order-lg-2 text-center text-lg-start'>
+		<h1 class='mb-3'><?=$_SESSION['user']?>'s Posts</h1>
+		<?=$userPosts($db)?>
+		</div> <!--row end-->
+	</div>
 	<!-- row ends -->
 	</div>
 </div> <!--container end-->
