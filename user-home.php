@@ -106,13 +106,18 @@ $userPosts = function($db) {
 		<div class="col-12 col-md-6 col-lg-4 order-1 order-md-1 order-lg-1 mb-2  centerContent">
             <div class="card mt-0 mt-lg-2 userBox" style="width: 18rem; height: 9.85rem;">
 			<a href='user-home.php' style='text-decoration:none;'>
-				<div class="card-body mt-3 ">
-					<img class='profileCard' src="images\<?=$pic?>" class="" width="112px" height="auto" alt="goblin">
-					<p class="mt-2 ml-2" style="color: #e9f6f1; letter-spacing:.75px; margin-left:auto; white-space:nowrap; display:inline-block;">
-						<strong><?=$_SESSION['user']?></strong><br>
-						<strong>Posts: <?=$postTotal?></strong><br>
-						<strong>Likes: <?=$likeTotal?></strong>
-					</p>
+			<div class="card-body mt-3 ">
+				<span>
+					<img class='profileCard' src="images\<?=$pic?>" class="" height="auto" width="112px"  alt="goblin" style="margin-top:-6px;">
+					<div style="float:right;"> 
+						<p class="mt-2 ml-2" style="color: #e9f6f1; letter-spacing:.75px; margin-left:auto; white-space:nowrap; display:inline-block;">
+
+							<strong><?=$_SESSION['user']?></strong><br>
+							<strong>Posts: <?=$postTotal?></strong><br>
+							<strong>Likes: <?=$likeTotal?></strong>
+						</p>
+					</div>
+					</span>
 				</div>
 			</a>
         	</div>
