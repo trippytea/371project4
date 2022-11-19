@@ -21,8 +21,8 @@ CREATE TABLE friends (
 CREATE TABLE post (
     postId int NOT NULL AUTO_INCREMENT,
     postContent LONGTEXT NOT NULL,
-    shortTitle CHAR(16) NOT NULL,
     username VARCHAR(50) NOT NULL,
+    date DATETIME NOT NULL,
     PRIMARY KEY(postId),
     FOREIGN KEY (username) REFERENCES users(username)
 );
