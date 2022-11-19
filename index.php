@@ -132,7 +132,22 @@ if (isset ($_POST['submit'])) {
 						<strong>Likes: <?=$likeTotal?></strong>
 					</p>
 					
-					<h4 style="float:right;margin-right:300px;">Post will go here</h4>
+					<p style="float:right;margin-right:300px;">
+					<?php 
+					$userPosts = function($db) {
+						$postQ = mysqli_query($db, "SELECT * FROM post WHERE username = '$_SESSION[user]' ORDER BY postId DESC");
+						while($row=mysqli_fetch_array($postQ)){
+							
+							echo "
+									<div class='card-body p-4 w-75'>
+									".calculate_time_span($row['date'])."<br>
+											$row[postContent] 
+									</div>";
+							}
+					}
+					?>
+					<?=$userPosts($db)?>
+				</p>
 					
 				</span>
 			</div>
