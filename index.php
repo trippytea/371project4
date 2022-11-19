@@ -1,10 +1,3 @@
-<?php 
-include 'db.php';
-include 'nav.php';
-ensure_logged_in();
-?>
-<!--php ends-->
-
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -27,9 +20,12 @@ ensure_logged_in();
 	<!-- custom CSS Stylesheet -->	  
     <link rel="stylesheet" type="text/css" href="styles.css";>
 </head>
-<body>
 
-<?php
+<?php 
+include 'db.php';
+include 'nav.php';
+ensure_logged_in();
+
 # get profile pic
 $name = $_SESSION['user'];
 $picresult = $db->query("SELECT profilePic FROM users WHERE username = '$name'");
@@ -76,8 +72,22 @@ if ($userresult) {
     	}
     }
 }
-?>
 
+#insert post from submission
+if (isset ($_POST['submit'])) {
+	$newPost = $_POST['newPost'];
+	date_default_timezone_set("America/Chicago");
+	$date = date('Y/m/d h:i:s');
+	$postStmnt = $db->prepare("INSERT INTO post(postContent, username, date) VALUES (?,?,?)");
+	$postStmnt->bind_param("sss",$newPost,$_SESSION['user'],$date);
+	$postStmnt->execute();
+	header("location: index.php");
+	exit();
+}
+
+?>
+<!--php ends-->
+<body>
 <div class="container mt-4 mt-lg-5">
     <div class="row">
 		<!--user profile section-->
@@ -102,9 +112,9 @@ if ($userresult) {
 		<div>
 		<div class="card-body">
 		<h2>Create Post </h2>
-					<form action="index.php" class='text-end'> 
+					<form method='post' action="index.php" class='text-end'> 
 						<input type="text" name='newPost' id='newPost' class="card-body w-100"  placeholder="Got something to say?">	
-						<button class="btn-primary btn-lg btn-block mb-3 mt-2 " type="submit" name='submit' value='Post'>Post</button>
+						<button class="btn-primary btn-lg btn-block mb-3 mt-2 " type="submit" name='submit'>Post</button>
 					</form>
 			</div>
 			<div class="card-body postBox p-4"> <!--post styling-->
