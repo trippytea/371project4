@@ -28,6 +28,7 @@ ensure_logged_in();
     <link rel="stylesheet" type="text/css" href="styles.css";>
 </head>
 <?php
+
 # get profile pic
 $name = $_GET['name'];
 $picresult = $db->query("SELECT profilePic FROM users WHERE username = '$name'");
@@ -59,13 +60,14 @@ if ($postresult) {
 
 #insert post from submission
 if (isset ($_POST['submit'])) {
+	$name=$_GET['name'];
 	$newPost = $_POST['newPost'];
 	date_default_timezone_set("America/Chicago");
 	$date = date('Y/m/d h:i:s');
 	$postStmnt = $db->prepare("INSERT INTO post(postContent, username, date) VALUES (?,?,?)");
-	$postStmnt->bind_param("sss",$newPost,$_SESSION['user'],$date);
+	$postStmnt->bind_param("sss",$newPost,$name,$date);
 	$postStmnt->execute();
-	header("location: index.php");
+	header("location: user-home.php?name=$name");
 	exit();
 }
 
@@ -91,7 +93,7 @@ $createPost = function ($name) {
 	if ($name == $_SESSION['user']){
 	echo " <div class='card-body'>
 	<h2>Create Post </h2>
-				<form method='post' action='user-home.php' class='text-end'> 
+				<form method='post' action='user-home.php?name=$name' class='text-end'> 
 					<input type='text' name='newPost' id='newPost' class='card-body w-100' placeholder='Got something to say?'>	
 					<button class='btn-primary btn-lg btn-block mt-2 ' type='submit' name='submit'>Post</button>
 				</form>
