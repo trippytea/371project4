@@ -144,7 +144,7 @@ $userPosts = function($db,$pic,$name) {
 		<!--post section-->
 		<div class='col-12 col-md-6 col-lg-8 order-2 order-md-2 order-lg-2 text-center text-lg-start'>
 		<?=$createPost($name)?>
-		<h2 class='mb-3'><?=$name?>'s Posts</h2>
+		<h2 class='mb-3 mx-4'><?=$name?>'s Posts</h2>
 		<?=$userPosts($db,$pic,$name)?>
 		</div> <!--row end-->
 	</div>
