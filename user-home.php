@@ -92,7 +92,7 @@ if ($userresult) {
 $createPost = function ($name) {
 	if ($name == $_SESSION['user']){
 	echo " <div class='card-body'>
-	<h2>Create Post </h2>
+				<h2>Create Post </h2>
 				<form method='post' action='user-home.php?name=$name' class='text-end'> 
 					<input type='text' name='newPost' id='newPost' class='card-body w-100' placeholder='Got something to say?'>	
 					<button class='btn-primary btn-lg btn-block mt-2 ' type='submit' name='submit'>Post</button>
@@ -144,7 +144,7 @@ $userPosts = function($db,$pic,$name) {
 		<!--post section-->
 		<div class='col-12 col-md-6 col-lg-8 order-2 order-md-2 order-lg-2 text-center text-lg-start'>
 		<?=$createPost($name)?>
-		<h2 class='mb-3 mx-4'><?=$name?>'s Posts</h2>
+		<h2 class='mb-1 mx-4'><?=$name?>'s Posts</h2>
 		<?=$userPosts($db,$pic,$name)?>
 		</div> <!--row end-->
 	</div>
