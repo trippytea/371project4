@@ -36,8 +36,8 @@ if (isset ($_GET['postId'])) {
 		if ($rows) {
 			$likedBy = $rows['likedBy'];
 			if ($name == $likedBy) {
-				header("location: index.php");
-				exit();	
+				$message = "You have already liked this post.";
+				echo "<div class='alert alert-danger mt-3 mx-auto text-center' role='alert'>".$message."</div>";
 			}
 		} else {
 			$postLikeStmnt = $db->prepare("INSERT INTO postlike(postId, likedBy) VALUES (?,?)");
@@ -155,7 +155,7 @@ if (isset ($_POST['submit'])) {
 							$postContent = $postrows['postContent'];
 							$postUsername = $postrows['username'];
 							$postDate = $postrows['date'];
-							
+
 							$friendResult = $db->query("SELECT * FROM friends WHERE friends.friendUsername='$postUsername' and friends.username='$name'");
 							if ($friendResult) {
 								$rows = mysqli_fetch_assoc($friendResult);
