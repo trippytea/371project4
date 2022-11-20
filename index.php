@@ -56,12 +56,13 @@ if ($postresult) {
 }
 
 # get like count
-$userresult = $db->query("SELECT postId FROM post WHERE username = '$name'");
+$likeCountUser = $_SESSION['user'];
+$userresult = $db->query("SELECT postId FROM post WHERE username = '$likeCountUser'");
 $likeTotal = 0;
 if ($userresult) {
-    $rows = mysqli_fetch_assoc($userresult);
-    if ($rows) {
+    while ($rows = mysqli_fetch_assoc($userresult)) {
 		$postId = $rows['postId'];
+		echo $postId;
 		$likeresult = $db->query("SELECT count(likeId) as total FROM postlike WHERE postId = '$postId'");
 		if ($likeresult) {
     		$row = mysqli_fetch_assoc($likeresult);
@@ -85,6 +86,22 @@ if (isset ($_POST['submit'])) {
 	exit();
 }
 
+#insert like submission
+if (isset ($_GET['postId'])) {
+	$getpostId = $_GET['postId'];
+	$likeCheckResult = $db->query("SELECT * FROM postlike WHERE likedBy= '$name' and postId = '$getpostId'");
+	if ($likeCheckResult) {
+		$rows = mysqli_fetch_assoc($likeCheckResult);
+		if ($rows) {
+			header("location: index.php");
+			exit();
+		} else {
+			$postLikeStmnt = $db->prepare("INSERT INTO postlike(postId, likedBy) VALUES (?,?)");
+			$postLikeStmnt->bind_param("ss", $getpostId, $name);
+			$postLikeStmnt->execute();
+		}
+	}
+}
 ?>
 <!--php ends-->
 <body>
@@ -112,7 +129,6 @@ if (isset ($_POST['submit'])) {
         </div> <!--col end-->
 
 	<!--user and friend post section-->
-
 	<div class="col-12 col-md-6 col-lg-8 order-2 order-md-2 order-lg-2 centerContent postArea">
 		<div>
 		<div class="card-body">
@@ -124,41 +140,52 @@ if (isset ($_POST['submit'])) {
 			</div>
 			<div class="card-body postBox p-4" style="width:800px;"> <!--post styling-->
 				<span>
-					<img class='profileCard' src="images\<?=$pic?>" class="" width="112px" height="auto" alt="goblin">
-					<p class="mt-2 ml-2" style="color: #254441; letter-spacing:.75px; margin-left:auto; white-space:nowrap; display:inline-block;">
+					<?php
+					$friendresult = $db->query("SELECT * FROM friends WHERE username = '$name'");
+					if ($friendresult) {
+    					$rows = mysqli_fetch_assoc($friendresult);
+    					if ($rows) {
+    						$friend = $rows['friendUsername'];
+					
+							$postresult = $db->query("SELECT * FROM post WHERE username = '$name' or username = '$friend' ORDER BY postId DESC");
+							if($postresult) {
+								while($postrows=mysqli_fetch_array($postresult)){
+									$postId = $postrows['postId'];
+									$postContent = $postrows['postContent'];
+									$postUsername = $postrows['username'];
+									$postDate = $postrows['date'];
 
-						<strong><?=$_SESSION['user']?></strong><br>
-						<strong>Posts: <?=$postTotal?></strong><br>
-						<strong>Likes: <?=$likeTotal?></strong>
-					</p>
-					
-					<p style="float:right;margin-right:300px;">
-					<?php 
-					$userPosts = function($db) {
-						$postQ = mysqli_query($db, "SELECT * FROM post WHERE username = '$_SESSION[user]' ORDER BY postId DESC");
-						while($row=mysqli_fetch_array($postQ)){
-							
-							echo "
-									<div class='card-body p-4 w-75'>
-									".calculate_time_span($row['date'])."<br>
-											$row[postContent] 
-									</div>";
-							}
-					}
-					?>
-					<?=$userPosts($db)?>
-				</p>
-					
+									$postpicresult = $db->query("SELECT profilePic FROM users WHERE username = '$postUsername'");
+									if ($postpicresult) {
+										$rows = mysqli_fetch_assoc($postpicresult);
+										if ($rows) {
+											$postpic = $rows['profilePic'];
+											?>
+											<div style="width:100%;"> 
+												<img class='profileCard' src="images\<?=$postpic?>" class="" width="112px" height="auto" alt="goblin" style="margin-top: -9.6rem;">
+												<p class="mt-2 ml-2" style="color: #254441; letter-spacing:.75px; margin-left:auto; white-space:nowrap; display:inline-block;">
+													<!-- style me plzzzz -->
+													<strong><?=$postUsername?></strong><br>
+													<strong><?=$postContent?></strong><br>
+													<strong><?=calculate_time_span($postDate)?></strong><br>
+													<a href="index.php?postId=<?php echo $postId;?>"> <button type="button" class= "btn btn-sm btn-success ">Like</button></a>
+													<br><br>
+													</form>
+												</p>
+											</div>
+											<?php
+										}
+									}
+								}
+    						}
+						}
+					} ?>					
 				</span>
 			</div>
 		</div>
 	</div> <!--col end-->
-
-	<!-- row ends -->
-	</div>
+	</div> 	<!-- row ends -->
 </div> <!--container end-->
-
-
 
 <!-- Bootstrap JS Bundle with Popper **needed for collapsable nav** -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
