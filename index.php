@@ -133,7 +133,7 @@ if (isset ($_POST['submit'])) {
         </div> <!--col end-->
 
 	<!--user and friend post section-->
-	<div class="col-12 col-md-6 col-lg-8 order-2 order-md-2 order-lg-2 centerContent postArea">
+	<div class="col-12 col-md-6 col-lg-8 order-2 order-md-2 order-lg-2">
 		<div>
 		<div class="card-body">
 		<h2>Create Post </h2>
