@@ -87,6 +87,18 @@ if ($userresult) {
     }
 }
 
+$createPost = function ($name) {
+	if ($name == $_SESSION['user']){
+	echo " <div class='card-body'>
+	<h2>Create Post </h2>
+				<form method='post' action='user-home.php' class='text-end'> 
+					<input type='text' name='newPost' id='newPost' class='card-body w-100' placeholder='Got something to say?'>	
+					<button class='btn-primary btn-lg btn-block mt-2 ' type='submit' name='submit'>Post</button>
+				</form>
+		</div>";
+	}
+};
+
 $userPosts = function($db,$pic,$name) {
 	$postQ = mysqli_query($db, "SELECT * FROM post WHERE username = '$name' ORDER BY postId DESC");
 	while($row=mysqli_fetch_array($postQ)){
@@ -129,13 +141,7 @@ $userPosts = function($db,$pic,$name) {
 
 		<!--post section-->
 		<div class='col-12 col-md-6 col-lg-8 order-2 order-md-2 order-lg-2 text-center text-lg-start'>
-		<div class="card-body">
-		<h2>Create Post </h2>
-					<form method='post' action="user-home.php" class='text-end'> 
-						<input type="text" name='newPost' id='newPost' class="card-body w-100"  placeholder="Got something to say?">	
-						<button class="btn-primary btn-lg btn-block mt-2 " type="submit" name='submit'>Post</button>
-					</form>
-			</div>
+		<?=$createPost($name)?>
 		<h2 class='mb-3'><?=$name?>'s Posts</h2>
 		<?=$userPosts($db,$pic,$name)?>
 		</div> <!--row end-->
