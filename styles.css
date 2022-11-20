@@ -14,6 +14,18 @@ body {
   
 }
 
+.log {
+  background-image:url("images/goldcoins.png");
+  background-position:center 170;
+  background-size:70%;
+}
+
+.reg {
+  background-image:url("images/goldcoins.png");
+  background-position:center 345;
+  background-size:70%;
+}
+
 footer {
   display:flex;
   align-items:center;
