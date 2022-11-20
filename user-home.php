@@ -58,11 +58,11 @@ if ($postresult) {
 }
 
 # get like count
-$userresult = $db->query("SELECT postId FROM post WHERE username = '$name'");
+$likeCountUser = $_SESSION['user'];
+$userresult = $db->query("SELECT postId FROM post WHERE username = '$likeCountUser'");
 $likeTotal = 0;
 if ($userresult) {
-    $rows = mysqli_fetch_assoc($userresult);
-    if ($rows) {
+    while ($rows = mysqli_fetch_assoc($userresult)) {
 		$postId = $rows['postId'];
 		$likeresult = $db->query("SELECT count(likeId) as total FROM postlike WHERE postId = '$postId'");
 		if ($likeresult) {

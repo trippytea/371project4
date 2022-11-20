@@ -62,7 +62,6 @@ $likeTotal = 0;
 if ($userresult) {
     while ($rows = mysqli_fetch_assoc($userresult)) {
 		$postId = $rows['postId'];
-		echo $postId;
 		$likeresult = $db->query("SELECT count(likeId) as total FROM postlike WHERE postId = '$postId'");
 		if ($likeresult) {
     		$row = mysqli_fetch_assoc($likeresult);
