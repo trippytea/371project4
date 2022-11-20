@@ -29,7 +29,7 @@ ensure_logged_in();
 </head>
 <?php
 # get profile pic
-$name = $_SESSION['user'];
+$name = $_GET['name'];
 $picresult = $db->query("SELECT profilePic FROM users WHERE username = '$name'");
 if ($picresult) {
     $rows = mysqli_fetch_assoc($picresult);
@@ -57,6 +57,18 @@ if ($postresult) {
     }
 }
 
+#insert post from submission
+if (isset ($_POST['submit'])) {
+	$newPost = $_POST['newPost'];
+	date_default_timezone_set("America/Chicago");
+	$date = date('Y/m/d h:i:s');
+	$postStmnt = $db->prepare("INSERT INTO post(postContent, username, date) VALUES (?,?,?)");
+	$postStmnt->bind_param("sss",$newPost,$_SESSION['user'],$date);
+	$postStmnt->execute();
+	header("location: index.php");
+	exit();
+}
+
 # get like count
 $likeCountUser = $_SESSION['user'];
 $userresult = $db->query("SELECT postId FROM post WHERE username = '$likeCountUser'");
@@ -75,24 +87,16 @@ if ($userresult) {
     }
 }
 
-#insert post from submission
-if (isset ($_POST['submit'])) {
-	$newPost = $_POST['newPost'];
-	$postStmnt = $db->prepare("INSERT INTO post(postContent, username) VALUES (?,?)");
-	$postStmnt->bind_param("ss",$newPost,$_SESSION['user']);
-	$postStmnt->execute();
-	header("location: index.php");
-	exit();
-}
-
-$userPosts = function($db) {
-	$postQ = mysqli_query($db, "SELECT * FROM post WHERE username = '$_SESSION[user]' ORDER BY postId DESC");
+$userPosts = function($db,$pic,$name) {
+	$postQ = mysqli_query($db, "SELECT * FROM post WHERE username = '$name' ORDER BY postId DESC");
 	while($row=mysqli_fetch_array($postQ)){
-		
 		echo "
-				<div class='card-body p-4 w-75'>
-				".calculate_time_span($row['date'])."<br>
-						$row[postContent] 
+				<div class='p-2 w-75'>
+				<div><img class='profileCard mx-3' src='images/".$pic."
+				'height=auto; width=50px; alt='goblin' style='margin-top:10px; float:left;'></div>
+				<div class='mt-2' style='overflow:hidden';>
+				Posted by ".$name." ".calculate_time_span($row['date'])."<br>
+					$row[postContent]</div>
 				</div>";
 		}
 }
@@ -100,19 +104,19 @@ $userPosts = function($db) {
 
 ?>
 <body>
-<div class="container mt-4 mt-lg-5 mx-auto">
+<div class="container mt-4 mt-lg-5 mb-5 mx-auto">
     <div class="row">
 		<!--user profile section-->
 		<div class="col-12 col-md-6 col-lg-4 order-1 order-md-1 order-lg-1 mb-2  centerContent">
             <div class="card mt-0 mt-lg-2 userBox" style="width: 18rem; height: 9.85rem;">
-			<a href='user-home.php' style='text-decoration:none;'>
+			<a href='index.php' style='text-decoration:none;'>
 			<div class="card-body mt-3 ">
 				<span>
 					<img class='profileCard' src="images\<?=$pic?>" class="" height="auto" width="112px"  alt="goblin" style="margin-top:-6px;">
 					<div style="float:right;"> 
 						<p class="mt-2 ml-2" style="color: #e9f6f1; letter-spacing:.75px; margin-left:auto; white-space:nowrap; display:inline-block;">
 
-							<strong><?=$_SESSION['user']?></strong><br>
+							<strong><?=$name?></strong><br>
 							<strong>Posts: <?=$postTotal?></strong><br>
 							<strong>Likes: <?=$likeTotal?></strong>
 						</p>
@@ -125,8 +129,15 @@ $userPosts = function($db) {
 
 		<!--post section-->
 		<div class='col-12 col-md-6 col-lg-8 order-2 order-md-2 order-lg-2 text-center text-lg-start'>
-		<h1 class='mb-3'><?=$_SESSION['user']?>'s Posts</h1>
-		<?=$userPosts($db)?>
+		<div class="card-body">
+		<h2>Create Post </h2>
+					<form method='post' action="user-home.php" class='text-end'> 
+						<input type="text" name='newPost' id='newPost' class="card-body w-100"  placeholder="Got something to say?">	
+						<button class="btn-primary btn-lg btn-block mt-2 " type="submit" name='submit'>Post</button>
+					</form>
+			</div>
+		<h2 class='mb-3'><?=$name?>'s Posts</h2>
+		<?=$userPosts($db,$pic,$name)?>
 		</div> <!--row end-->
 	</div>
 	<!-- row ends -->
