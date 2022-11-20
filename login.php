@@ -53,12 +53,12 @@ if (is_password_correct($email, $password, $db)) {
 	<!-- custom CSS Stylesheet -->	  
     <link rel="stylesheet" type="text/css" href="styles.css";>
 </head>
-<body>
+<body class='log'>
 <img src="images\cave_logo.png" class="mx-auto d-flex pt-5 pb-0" width="110px" height="auto" alt="logo">
     <div class="d-flex justify-content-center mx-auto">
 
     <form method="post">
-    <h1 class="mt-3 mb-3 centerContent ">User Login</h1>
+    <h1 class="mt-3 mb-3 centerContent ">Goblin Login</h1>
     <?=$promptMessage()?> <!--call prompt message function-->            
         <div class="form-outline mb-2">
             <label class="form-label" for="email">Email</label>
