@@ -106,7 +106,6 @@ if (isset ($_POST['submit'])) {
 	exit();
 }
 
-
 ?>
 <!--php ends-->
 <body>
@@ -115,7 +114,7 @@ if (isset ($_POST['submit'])) {
 		<!--user profile section-->
 		<div class="col-12 col-md-6 col-lg-4 order-1 order-md-1 order-lg-1 mb-2  centerContent">
             <div class="card mt-0 mt-lg-2 userBox" style="width: 18rem; height: 9.85rem;">
-			<a href='user-home.php' style='text-decoration:none;'>
+			<a href='user-home.php?name=<?=$name?>' style='text-decoration:none;'>
 				<div class="card-body mt-3 ">
 				<span>
 					<img class='profileCard' src="images\<?=$pic?>" class="" height="auto" width="112px"  alt="goblin" style="margin-top:-6px;">
@@ -146,8 +145,6 @@ if (isset ($_POST['submit'])) {
 			<div class="card-body postBox p-4" style="width:800px;"> <!--post styling-->
 				<span>
 					<?php
-
-					
 					$postresult = $db->query("SELECT * FROM post ORDER BY postId DESC");
 					if($postresult) {
 						while($postrows=mysqli_fetch_array($postresult)){
@@ -170,7 +167,7 @@ if (isset ($_POST['submit'])) {
 											<img class='profileCard' src="images\<?=$postpic?>" class="" width="112px" height="auto" alt="goblin" style="margin-top: -9.6rem;">
 											<p class="mt-2 ml-2" style="color: #254441; letter-spacing:.75px; margin-left:auto; white-space:nowrap; display:inline-block;">
 												<!-- style me plzzzz -->
-												<strong><?=$postUsername?></strong><br>
+												<strong><a href='user-home.php?name=<?=$postUsername?>' style='text-decoration:none;'><?=$postUsername?></a></strong><br>
 												<strong><?=$postContent?></strong><br>
 												<strong><?=calculate_time_span($postDate)?></strong><br>
 												<a href="index.php?postId=<?php echo $postId;?>"> <button type="button" class= "btn btn-sm btn-success ">Like</button></a>
