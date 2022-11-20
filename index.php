@@ -26,6 +26,27 @@ include 'db.php';
 include 'nav.php';
 ensure_logged_in();
 
+#insert like submission
+$name = $_SESSION['user'];
+if (isset ($_GET['postId'])) {
+	$getpostId = $_GET['postId'];
+	$likeCheckResult = $db->query("SELECT * FROM postlike WHERE postId = '$getpostId'");
+	if ($likeCheckResult) {
+		$rows = mysqli_fetch_assoc($likeCheckResult);
+		if ($rows) {
+			$likedBy = $rows['likedBy'];
+			if ($name == $likedBy) {
+				header("location: index.php");
+				exit();	
+			}
+		} else {
+			$postLikeStmnt = $db->prepare("INSERT INTO postlike(postId, likedBy) VALUES (?,?)");
+			$postLikeStmnt->bind_param("ss", $getpostId, $name);
+			$postLikeStmnt->execute();
+		}
+	} 
+}
+
 # get profile pic
 $name = $_SESSION['user'];
 $picresult = $db->query("SELECT profilePic FROM users WHERE username = '$name'");
@@ -85,22 +106,7 @@ if (isset ($_POST['submit'])) {
 	exit();
 }
 
-#insert like submission
-if (isset ($_GET['postId'])) {
-	$getpostId = $_GET['postId'];
-	$likeCheckResult = $db->query("SELECT * FROM postlike WHERE likedBy= '$name' and postId = '$getpostId'");
-	if ($likeCheckResult) {
-		$rows = mysqli_fetch_assoc($likeCheckResult);
-		if ($rows) {
-			header("location: index.php");
-			exit();
-		} else {
-			$postLikeStmnt = $db->prepare("INSERT INTO postlike(postId, likedBy) VALUES (?,?)");
-			$postLikeStmnt->bind_param("ss", $getpostId, $name);
-			$postLikeStmnt->execute();
-		}
-	}
-}
+
 ?>
 <!--php ends-->
 <body>
@@ -140,20 +146,20 @@ if (isset ($_GET['postId'])) {
 			<div class="card-body postBox p-4" style="width:800px;"> <!--post styling-->
 				<span>
 					<?php
-					$friendresult = $db->query("SELECT * FROM friends WHERE username = '$name'");
-					if ($friendresult) {
-    					$rows = mysqli_fetch_assoc($friendresult);
-    					if ($rows) {
-    						$friend = $rows['friendUsername'];
-					
-							$postresult = $db->query("SELECT * FROM post WHERE username = '$name' or username = '$friend' ORDER BY postId DESC");
-							if($postresult) {
-								while($postrows=mysqli_fetch_array($postresult)){
-									$postId = $postrows['postId'];
-									$postContent = $postrows['postContent'];
-									$postUsername = $postrows['username'];
-									$postDate = $postrows['date'];
 
+					
+					$postresult = $db->query("SELECT * FROM post ORDER BY postId DESC");
+					if($postresult) {
+						while($postrows=mysqli_fetch_array($postresult)){
+							$postId = $postrows['postId'];
+							$postContent = $postrows['postContent'];
+							$postUsername = $postrows['username'];
+							$postDate = $postrows['date'];
+							
+							$friendResult = $db->query("SELECT * FROM friends WHERE friends.friendUsername='$postUsername' and friends.username='$name'");
+							if ($friendResult) {
+								$rows = mysqli_fetch_assoc($friendResult);
+								if ($rows) {
 									$postpicresult = $db->query("SELECT profilePic FROM users WHERE username = '$postUsername'");
 									if ($postpicresult) {
 										$rows = mysqli_fetch_assoc($postpicresult);
@@ -161,24 +167,24 @@ if (isset ($_GET['postId'])) {
 											$postpic = $rows['profilePic'];
 											?>
 											<div style="width:100%;"> 
-												<img class='profileCard' src="images\<?=$postpic?>" class="" width="112px" height="auto" alt="goblin" style="margin-top: -9.6rem;">
-												<p class="mt-2 ml-2" style="color: #254441; letter-spacing:.75px; margin-left:auto; white-space:nowrap; display:inline-block;">
-													<!-- style me plzzzz -->
-													<strong><?=$postUsername?></strong><br>
-													<strong><?=$postContent?></strong><br>
-													<strong><?=calculate_time_span($postDate)?></strong><br>
-													<a href="index.php?postId=<?php echo $postId;?>"> <button type="button" class= "btn btn-sm btn-success ">Like</button></a>
-													<br><br>
-													</form>
-												</p>
+											<img class='profileCard' src="images\<?=$postpic?>" class="" width="112px" height="auto" alt="goblin" style="margin-top: -9.6rem;">
+											<p class="mt-2 ml-2" style="color: #254441; letter-spacing:.75px; margin-left:auto; white-space:nowrap; display:inline-block;">
+												<!-- style me plzzzz -->
+												<strong><?=$postUsername?></strong><br>
+												<strong><?=$postContent?></strong><br>
+												<strong><?=calculate_time_span($postDate)?></strong><br>
+												<a href="index.php?postId=<?php echo $postId;?>"> <button type="button" class= "btn btn-sm btn-success ">Like</button></a>
+												<br><br>
+											</p>
 											</div>
-											<?php
-										}
+										<?php
+										}	
+
 									}
 								}
-    						}
+							}
 						}
-					} ?>					
+    				}?>					
 				</span>
 			</div>
 		</div>
