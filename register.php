@@ -80,12 +80,12 @@ if (isset( $_POST['submit'] )) {
     <link rel="stylesheet" type="text/css" href="styles.css";>
 </head>
 
-<body>
+<body class='reg'>
 <img src="images\cave_logo.png" class="mx-auto d-flex pt-5" width="110px" height="auto" alt="logo">
 
     <div class="d-flex justify-content-center mx-auto mb-4">
     <form method="post" class="registerForm">
-        <h1 class="mb-3 centerContent ">Register User</h1>
+        <h1 class="mb-3 centerContent ">Register Goblin</h1>
         <?=$promptMessage()?> <!--call prompt message function-->
         <div class="form-outline mb-2">
             <label class="form-label" for="user">Username</label>
