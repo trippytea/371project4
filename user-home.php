@@ -126,7 +126,7 @@ $userPosts = function($db,$pic,$name) {
 			<a href='index.php' style='text-decoration:none;'>
 			<div class="card-body mt-3 centerContent">
 				<span>
-				<img class='profileCard me-3' src="images\<?=$pic?>" height="112px" width="112px" alt="goblin" style="margin-top: 2px;">
+				<img class='profileCard me-2' src="images\<?=$pic?>" height="112px" width="112px" alt="goblin" style="margin-top: 2px;">
 				<div style="float:right;"> 
 						<p style="color: #e9f6f1; letter-spacing:.75px; white-space:nowrap; display:inline-block;">
 						<strong><?=$firstName." ".$lastName?></strong><br>
