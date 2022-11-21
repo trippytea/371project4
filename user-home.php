@@ -72,7 +72,7 @@ if (isset ($_POST['submit'])) {
 }
 
 # get like count
-$likeCountUser = $_SESSION['user'];
+$likeCountUser = $name;
 $userresult = $db->query("SELECT postId FROM post WHERE username = '$likeCountUser'");
 $likeTotal = 0;
 if ($userresult) {
