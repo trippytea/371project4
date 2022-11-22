@@ -111,6 +111,7 @@ if (isset ($_POST['submit'])) {
 	exit();
 }
 
+#insert comment
 if (isset ($_POST['commentBtn'])) {
 	$comment = $_POST['comment'];
 	$postId = $_POST['postId'];
@@ -119,7 +120,7 @@ if (isset ($_POST['commentBtn'])) {
 	#date_default_timezone_set("America/Chicago");
 	#$date = date('Y/m/d h:i:s');
 	$commentStmnt = $db->prepare("INSERT INTO comment(commentContent, postId, username) VALUES (?,?,?)");
-	$commentStmnt->bind_param("sss",$comment,$_SESSION['user'],$postId);
+	$commentStmnt->bind_param("sss",$comment,$postId,$_SESSION['user']);
 	$commentStmnt->execute();
 	header("location: index.php");
 	exit();
