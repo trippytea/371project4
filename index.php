@@ -180,6 +180,15 @@ if (isset ($_POST['submit'])) {
 												$postContent<br>"?>
 
 												<a href="index.php?postId=<?php echo $postId;?>"> <button type="button" class= "btn btn-sm btn-success ">Like</button></a>
+												<button onclick="myFunction()" class= "btn btn-sm btn-success ">Comment</button>
+
+												<script>
+												function myFunction() {
+													var x = document.createElement("INPUT");
+													x.setAttribute("type", "text");
+													x.setAttribute("value", " ");
+													document.body.appendChild(x);
+												}
 												<?php
 												# get like count for the post
 														$sql = "SELECT count(likeId) as total FROM postlike WHERE postId = '$postId'";
