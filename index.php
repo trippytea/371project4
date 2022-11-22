@@ -30,19 +30,24 @@ ensure_logged_in();
 $name = $_SESSION['user'];
 if (isset ($_GET['postId'])) {
 	$getpostId = $_GET['postId'];
-	$likeCheckResult = $db->query("SELECT * FROM postlike WHERE postId = '$getpostId'");
+	echo $getpostId;
+	$userCheck = $_SESSION['user'];
+	echo $userCheck;
+	$likeCheckResult = $db->query("SELECT * FROM postlike WHERE postId = '$getpostId' and likedBy = '$userCheck'");
 	if ($likeCheckResult) {
-		$rows = mysqli_fetch_assoc($likeCheckResult);
-		if ($rows) {
+		while ($rows = mysqli_fetch_assoc($likeCheckResult)); {
 			$likedBy = $rows['likedBy'];
-			if ($name == $likedBy) {
+			echo $likedBy;
+			echo $_SESSION['user'];
+			if ($_SESSION['user'] == $likedBy) {
 				$message = "You have already liked this post.";
 				echo "<div class='alert alert-danger mt-3 mx-auto text-center' role='alert'>".$message."</div>";
-			}
-		} else {
+			} else {
+			echo "insert plox";
 			$postLikeStmnt = $db->prepare("INSERT INTO postlike(postId, likedBy) VALUES (?,?)");
-			$postLikeStmnt->bind_param("ss", $getpostId, $name);
+			$postLikeStmnt->bind_param("ss", $getpostId, $_SESSION['user']);
 			$postLikeStmnt->execute();
+			}
 		}
 	} 
 }
@@ -142,7 +147,7 @@ if (isset ($_POST['submit'])) {
 						<button class="btn-primary btn-lg btn-block mb-3 mt-2 " type="submit" name='submit'>Post</button>
 					</form>
 			</div>
-			<div class="card-body postBox p-4" style="width:800px;"> <!--post styling-->
+			<div class="col-12 col-md-6 col-lg-8 order-2 order-md-2 order-lg-2 text-center text-lg-start" style="width:800px;"> <!--post styling-->
 				<span>
 					<?php
 					$postresult = $db->query("SELECT * FROM post ORDER BY postId DESC");
@@ -164,15 +169,34 @@ if (isset ($_POST['submit'])) {
 											$postpic = $rows['profilePic'];
 											?>
 											<div style="width:100%;"> 
-											<img class='profileCard' src="images\<?=$postpic?>" class="" width="112px" height="auto" alt="goblin" style="margin-top: -9.6rem;">
-											<p class="mt-2 ml-2" style="color: #254441; letter-spacing:.75px; margin-left:auto; white-space:nowrap; display:inline-block;">
 												<!-- style me plzzzz -->
-												<strong><a href='user-home.php?name=<?=$postUsername?>' style='text-decoration:none;'><?=$postUsername?></a></strong><br>
-												<strong><?=$postContent?></strong><br>
-												<strong><?=calculate_time_span($postDate)?></strong><br>
+												<?php
+												echo "
+												<div class='p-2 w-75'>
+												<div><img class='profileCard mx-3' src='images/".$postpic."
+												'height=auto; width=50px; alt='goblin' style='margin-top:10px; float:left;'></div>
+												<div class='mt-2' style='overflow:hidden';>
+												Posted by ".$postUsername." ".calculate_time_span($postDate)."<br>
+												$postContent<br>"?>
+
 												<a href="index.php?postId=<?php echo $postId;?>"> <button type="button" class= "btn btn-sm btn-success ">Like</button></a>
-												<br><br>
-											</p>
+												<?php
+												# get like count for the post
+														$sql = "SELECT count(likeId) as total FROM postlike WHERE postId = '$postId'";
+														$likePostResult = mysqli_query($db, $sql);
+														if ($likePostResult) {
+    														$likePostRow = mysqli_fetch_assoc($likePostResult);
+    														if ($likePostRow) {
+    															$likePostCount = $row['total'];
+																echo $likePostRow['total'];
+
+   															}
+    													}
+    												
+												?>
+												
+												</div>
+												</div>
 											</div>
 										<?php
 										}	
