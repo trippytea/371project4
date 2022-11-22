@@ -111,6 +111,20 @@ if (isset ($_POST['submit'])) {
 	exit();
 }
 
+if (isset ($_POST['commentBtn'])) {
+	$comment = $_POST['comment'];
+	$postId = $_POST['postId'];
+	echo "<pre>".$comment."</pre>";
+	echo "<pre>".$postId."</pre>";
+	#date_default_timezone_set("America/Chicago");
+	#$date = date('Y/m/d h:i:s');
+	$commentStmnt = $db->prepare("INSERT INTO comment(commentContent, postId, username) VALUES (?,?,?)");
+	$commentStmnt->bind_param("sss",$comment,$_SESSION['user'],$postId);
+	$commentStmnt->execute();
+	header("location: index.php");
+	exit();
+}
+
 ?>
 <!--php ends-->
 <body>
@@ -176,7 +190,8 @@ if (isset ($_POST['submit'])) {
 												<div><img class='profileCard mx-3' src='images/".$postpic."
 												'height=auto; width=50px; alt='goblin' style='margin-top:10px; float:left;'></div>
 												<div class='mt-2' style='overflow:hidden';>
-												Posted by <a href='user-home.php?name=$postUsername' style='text-decoration:none;'>".$postUsername."</a> ".calculate_time_span($postDate)."<br>
+												Posted by <a href='user-home.php?name=$postUsername' style='text-decoration:none;'>".$postUsername."
+												</a> ".calculate_time_span($postDate)."<br>
 												$postContent<br>"?>
 
 												<?php
@@ -186,29 +201,31 @@ if (isset ($_POST['submit'])) {
 														if ($likePostResult) {
     														$likePostRow = mysqli_fetch_assoc($likePostResult);
     														if ($likePostRow) {
-    															$likePostCount = $row['total'];
+    															$likePostCount = $likePostRow['total'];
 																echo "<a href='index.php?postId=$postId'><button type='button' class='btn btn-sm btn-success'>
-																Like $row[total]</button></a>";
+																Like $likePostCount</button></a>";
 
    															}
     													}
     												
-												?>
-												<button class="btn btn-sm btn-success mx-1 commentBtn">Comment</button>
-												<input type='text' name='comment' maxlength='60'></input>
-
-												
-												</div>
+												echo "
+												<form method='post' action='index.php'>
+												<button class='btn btn-sm btn-success mx-1 commentBtn' name='commentBtn' id='commentBtn' 
+												value='submit'>Comment</button>
+												<input type='text' name='comment' id='comment' maxlength='60' style='width:250px;' 
+												placeholder=' Add a comment'></input>
+												<input type='hidden' value='$postId' name='postId' id='postId'></input>
+												</form>	
 												</div>
 											</div>
-										<?php
+										</div>";
 										}	
-
 									}
 								}
 							}
 						}
-    				}?>					
+    				}
+					?>				
 				</span>
 			</div>
 		</div>
