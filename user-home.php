@@ -103,20 +103,24 @@ $createPost = function ($name) {
 
 $userPosts = function($db,$pic,$name) {
 	$postQ = mysqli_query($db, "SELECT * FROM post WHERE username = '$name' ORDER BY postId DESC");
+
 	while($row=mysqli_fetch_array($postQ)){
+		$postId = $row['postId'];
 		echo "
 				<div class='p-2 w-75'>
 				<div><img class='profileCard mx-3' src='images/".$pic."
 				'height=auto; width=50px; alt='goblin' style='margin-top:10px; float:left;'></div>
 				<div class='mt-2' style='overflow:hidden';>
 				Posted by ".$name." ".calculate_time_span($row['date'])."<br>
-					$row[postContent]</div>
+					$row[postContent]
+					<a href='user-home.php?postId=".$postId."&name=".$name."'><button type='button' class= 'btn btn-sm btn-success'>Like</button></a>
+					</div>
 				</div>";
 		}
-}
-
+};
 
 ?>
+
 <body>
 <div class="container mt-4 mt-lg-5 mb-5 mx-auto">
     <div class="row">
