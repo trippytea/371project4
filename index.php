@@ -126,6 +126,7 @@ if (isset ($_POST['commentBtn'])) {
 	exit();
 }
 
+
 ?>
 <!--php ends-->
 <body>
@@ -183,8 +184,8 @@ if (isset ($_POST['commentBtn'])) {
 										if ($rows) {
 											$postpic = $rows['profilePic'];
 											?>
-											<div style="width:100%;"> 
-												<!-- style me plzzzz -->
+											<!--each individual post-->
+											<div class='mb-3' style="width:100%;"> 
 												<?php
 												echo "
 												<div class='p-2 w-75'>
@@ -208,24 +209,47 @@ if (isset ($_POST['commentBtn'])) {
 
    															}
     													}
-    												
+    										#comment form
 												echo "
-												<form method='post' action='index.php'>
-												<button class='btn btn-sm btn-success mx-1 commentBtn' name='commentBtn' id='commentBtn' 
-												value='submit'>Comment</button>
+												<form method='post' action='index.php' class='d-inline'>
+												<button class='btn btn-sm btn-success' name='commentBtn' id='commentBtn' 
+													value='submit'>Comment</button>
 												<input type='text' name='comment' id='comment' maxlength='60' style='width:250px;' 
-												placeholder=' Add a comment'></input>
+													placeholder=' Add a comment'></input>
 												<input type='hidden' value='$postId' name='postId' id='postId'></input>
 												</form>	
 												</div>
 											</div>
-										</div>";
-										}	
+											";
+										#comment logic
+										$commentsql = "SELECT * FROM comment WHERE postId = '$postId'";
+										$commentResult = mysqli_query($db, $commentsql);
+										if ($commentResult) {
+											$commentRow = mysqli_fetch_all($commentResult);
+												for ($i=0; $i < count($commentRow); $i++) {
+												$comment = $commentRow[$i][1];
+												$commentUser = $commentRow[$i][3];
+
+												$commentPicSql = "SELECT profilePic FROM users WHERE username = '$commentUser'";
+												$commentPicResult = mysqli_query($db, $commentPicSql);
+												$commentPicRow = mysqli_fetch_assoc($commentPicResult);
+												if ($commentPicRow) {
+													$commentPic = $commentPicRow['profilePic'];
+												echo "<div style='margin-left:120px; margin-top:1%;'><img src='images/$commentPic' width='25px' class='me-1'>
+													<a href='user-home.php?name=$commentUser' style='text-decoration:none;'>".$commentUser."</a>
+													  <div style='margin-left:36px;'>$comment</div></div>";
+												}
+										}					
+										}
+										echo "</div>"; 
+										#end individual posts
+									}
+									}
 									}
 								}
 							}
 						}
-    				}
+    				
 					?>				
 				</span>
 			</div>
