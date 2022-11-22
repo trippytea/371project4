@@ -144,7 +144,7 @@ if (isset ($_POST['submit'])) {
 		<h2>Create Post </h2>
 					<form method='post' action="index.php" class='text-end'> 
 						<input type="text" name='newPost' id='newPost' class="card-body w-100"  placeholder="Got something to say?">	
-						<button class="btn-primary btn-lg btn-block mb-3 mt-2 " type="submit" name='submit'>Post</button>
+						<button class="btn-primary btn-lg btn-block mt-2 " type="submit" name='submit'>Post</button>
 					</form>
 			</div>
 			<div class="col-12 col-md-6 col-lg-8 order-2 order-md-2 order-lg-2 text-center text-lg-start" style="width:800px;"> <!--post styling-->
@@ -209,6 +209,7 @@ if (isset ($_POST['submit'])) {
 				</span>
 			</div>
 		</div>
+		<br>
 	</div> <!--col end-->
 	</div> 	<!-- row ends -->
 </div> <!--container end-->
