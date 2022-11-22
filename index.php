@@ -176,7 +176,7 @@ if (isset ($_POST['submit'])) {
 												<div><img class='profileCard mx-3' src='images/".$postpic."
 												'height=auto; width=50px; alt='goblin' style='margin-top:10px; float:left;'></div>
 												<div class='mt-2' style='overflow:hidden';>
-												Posted by ".$postUsername." ".calculate_time_span($postDate)."<br>
+												Posted by <a href='user-home.php?name=$postUsername' style='text-decoration:none;'>".$postUsername."</a> ".calculate_time_span($postDate)."<br>
 												$postContent<br>"?>
 
 												<a href="index.php?postId=<?php echo $postId;?>"> <button type="button" class= "btn btn-sm btn-success ">Like</button></a>
