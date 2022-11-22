@@ -179,16 +179,6 @@ if (isset ($_POST['submit'])) {
 												Posted by <a href='user-home.php?name=$postUsername' style='text-decoration:none;'>".$postUsername."</a> ".calculate_time_span($postDate)."<br>
 												$postContent<br>"?>
 
-												<a href="index.php?postId=<?php echo $postId;?>"> <button type="button" class= "btn btn-sm btn-success ">Like</button></a>
-												<button onclick="myFunction()" class= "btn btn-sm btn-success ">Comment</button>
-
-												<script>
-												function myFunction() {
-													var x = document.createElement("INPUT");
-													x.setAttribute("type", "text");
-													x.setAttribute("value", " ");
-													document.body.appendChild(x);
-												}
 												<?php
 												# get like count for the post
 														$sql = "SELECT count(likeId) as total FROM postlike WHERE postId = '$postId'";
@@ -197,12 +187,16 @@ if (isset ($_POST['submit'])) {
     														$likePostRow = mysqli_fetch_assoc($likePostResult);
     														if ($likePostRow) {
     															$likePostCount = $row['total'];
-																echo $likePostRow['total'];
+																echo "<a href='index.php?postId=$postId'><button type='button' class='btn btn-sm btn-success'>
+																Like $row[total]</button></a>";
 
    															}
     													}
     												
 												?>
+												<button class="btn btn-sm btn-success mx-1 commentBtn">Comment</button>
+												<input type='text' name='comment' maxlength='60'></input>
+
 												
 												</div>
 												</div>
