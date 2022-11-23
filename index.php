@@ -120,10 +120,10 @@ if (isset ($_POST['commentBtn'])) {
 	$comment = $_POST['comment']; 
 	if($_POST['comment'] != '') {
 		$postId = $_POST['postId'];
-		#date_default_timezone_set("America/Chicago");
-		#$date = date('Y/m/d h:i:s');
-		$commentStmnt = $db->prepare("INSERT INTO comment(commentContent, postId, username) VALUES (?,?,?)");
-		$commentStmnt->bind_param("sss",$comment,$postId,$_SESSION['user']);
+		date_default_timezone_set("America/Chicago");
+		$date = date('Y/m/d h:i:s');
+		$commentStmnt = $db->prepare("INSERT INTO comment(commentContent, postId, username, date) VALUES (?,?,?,?)");
+		$commentStmnt->bind_param("ssss",$comment,$postId,$_SESSION['user'],$date);
 		$commentStmnt->execute();
 		header("location: index.php");
 		exit();		
@@ -140,9 +140,9 @@ if (isset ($_POST['commentBtn'])) {
 		<div class="col-12 col-md-6 col-lg-4 order-1 order-md-1 order-lg-1 mb-2  centerContent">
             <div class="card mt-0 mt-lg-2 userBox" style="width: 21rem; height: 9.85rem;">
 			<a href='user-home.php?name=<?=$name?>' style='text-decoration:none;'>
-			<div class="card-body mt-3 centerContent">
+			<div class="card-body mt-4 centerContent">
 				<span>
-				<img class='profileCard me-2' src="images\<?=$pic?>" height="112px" width="112px" alt="goblin" style="margin-top: 2px;">
+				<img class='profileCard me-2' src="images\<?=$pic?>" height="112px" width="112px" alt="goblin" style="margin-top: 10px;">
 				<div style="float:right;"> 
 						<p style="color: #e9f6f1; letter-spacing:.75px; white-space:nowrap; display:inline-block;">
 							<strong><?=$firstName." ".$lastName?></strong><br>
@@ -235,21 +235,22 @@ if (isset ($_POST['commentBtn'])) {
 											</div>
 											";
 										#comment logic
-										$commentsql = "SELECT * FROM comment WHERE postId = '$postId'";
+										$commentsql = "SELECT * FROM comment WHERE postId = '$postId' ORDER BY commentId DESC";
 										$commentResult = mysqli_query($db, $commentsql);
 										if ($commentResult) {
 											$commentRow = mysqli_fetch_all($commentResult);
 												for ($i=0; $i < count($commentRow); $i++) {
 												$comment = $commentRow[$i][1];
 												$commentUser = $commentRow[$i][3];
-
+												$date = $commentRow[$i][4];		
 												$commentPicSql = "SELECT profilePic FROM users WHERE username = '$commentUser'";
 												$commentPicResult = mysqli_query($db, $commentPicSql);
 												$commentPicRow = mysqli_fetch_assoc($commentPicResult);
 												if ($commentPicRow) {
 													$commentPic = $commentPicRow['profilePic'];
 												echo "<div style='margin-left:120px; margin-top:1%;'><img src='images/$commentPic' width='25px' class='me-1'>
-													<a href='user-home.php?name=$commentUser' style='text-decoration:none;'>".$commentUser."</a>
+													<a href='user-home.php?name=$commentUser' style='text-decoration:none;'>".$commentUser
+														."</a> ".calculate_time_span($date)."
 													  <div style='margin-left:36px;'>$comment</div></div>";
 												}
 										}					
