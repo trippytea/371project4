@@ -29,16 +29,12 @@ ensure_logged_in();
 #insert like submission
 if (isset ($_GET['postId'])) {
 	$getpostId = $_GET['postId'];
-	echo $getpostId;
 	$userCheck = $_SESSION['user'];
-	echo $userCheck;
 	$likeCheckResult = $db->query("SELECT * FROM postlike WHERE postId = '$getpostId' and likedBy = '$userCheck'");
 	if ($likeCheckResult) {
 		if ($rows = mysqli_fetch_assoc($likeCheckResult)) {
-			$message = "You have already liked this post.";
-			echo "<div class='alert alert-danger mt-3 mx-auto text-center' role='alert'>".$message."</div>";
+			$unlikeResult = $db->query("DELETE FROM postlike WHERE postId = '$getpostId' and likedBy = '$userCheck'");
 		} else {
-			echo "insert plox";
 			$postLikeStmnt = $db->prepare("INSERT INTO postlike(postId, likedBy) VALUES (?,?)");
 			$postLikeStmnt->bind_param("ss", $getpostId, $_SESSION['user']);
 			$postLikeStmnt->execute();
