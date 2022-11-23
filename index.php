@@ -27,7 +27,6 @@ include 'nav.php';
 ensure_logged_in();
 
 #insert like submission
-$name = $_SESSION['user'];
 if (isset ($_GET['postId'])) {
 	$getpostId = $_GET['postId'];
 	echo $getpostId;
@@ -35,22 +34,18 @@ if (isset ($_GET['postId'])) {
 	echo $userCheck;
 	$likeCheckResult = $db->query("SELECT * FROM postlike WHERE postId = '$getpostId' and likedBy = '$userCheck'");
 	if ($likeCheckResult) {
-		while ($rows = mysqli_fetch_assoc($likeCheckResult)); {
-			$likedBy = $rows['likedBy'];
-			echo $likedBy;
-			echo $_SESSION['user'];
-			if ($_SESSION['user'] == $likedBy) {
-				$message = "You have already liked this post.";
-				echo "<div class='alert alert-danger mt-3 mx-auto text-center' role='alert'>".$message."</div>";
-			} else {
+		if ($rows = mysqli_fetch_assoc($likeCheckResult)) {
+			$message = "You have already liked this post.";
+			echo "<div class='alert alert-danger mt-3 mx-auto text-center' role='alert'>".$message."</div>";
+		} else {
 			echo "insert plox";
 			$postLikeStmnt = $db->prepare("INSERT INTO postlike(postId, likedBy) VALUES (?,?)");
 			$postLikeStmnt->bind_param("ss", $getpostId, $_SESSION['user']);
 			$postLikeStmnt->execute();
-			}
 		}
-	} 
-}
+	}
+} 
+
 
 # get profile pic
 $name = $_SESSION['user'];
