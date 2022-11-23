@@ -48,15 +48,15 @@ function ensure_logged_in() {
     }
     
     elseif ($days < 1 && $hours < 1) {
-        return substr($minutes,1,)." minutes ago.";
+        return $minutes." minutes ago.";
     }
 
     elseif ($days <1 && $hours = 1) {
-      return "1 hour ".substr($minutes,1,)." minutes ago.";
+      return "1 hour ".$minutes." minutes ago.";
     }
 
     elseif ($days <1 && $hours >= 1) {
-      return substr($hours,1,) ." hours ".substr($minutes,1,)." minutes ago.";
+      return $hours ." hours ".$minutes." minutes ago.";
     }
 
     elseif ($days = 1){
