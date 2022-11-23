@@ -65,7 +65,7 @@ INSERT INTO friends (friendUsername, username)
 VALUES ('Grugg','Grugg'),('Krugg','Krugg'),('Goblin_Tom','Goblin_Tom');
 
 INSERT INTO post (postContent, username, date)
-VALUES ('Goblin do no bad. Goblin only want to eat trash and take shiny gold. Why people no like goblin? World make Grugg sad. . . :(', 
+VALUES ('Goblin do no bad. Goblin only want eat trash and take shiny gold. Why people no like goblin? World make Grugg sad. . . :(', 
          'Grugg', now()),
        ('KRUUUUUUUUUGGGGGG IS DA BEST, OH YEAH BABY!!!!', 'Krugg', now()),
        ('Welcome to the den, fellow goblin!', 'Goblin_Tom', now());
