@@ -13,6 +13,11 @@ body {
   border-color: #254441;
 }
 
+.btn-primary:hover {
+  background-color: #3b6f47 !important;
+  border-color: #254441;
+}
+
 .log {
   background-image:url("images/goldcoins.png");
   background-position:center 185;
@@ -84,7 +89,9 @@ h1,h2,h6 {
   margin-bottom:2%;
   border:none;
 }
-
+.card-body {
+  padding: 0px !important;
+}
 .card:hover {
   transform: scale(1.05);
 }
