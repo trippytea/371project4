@@ -140,7 +140,7 @@ if (isset ($_POST['commentBtn'])) {
 		<div class="col-12 col-md-6 col-lg-4 order-1 order-md-1 order-lg-1 mb-2  centerContent">
             <div class="card mt-0 mt-lg-2 userBox" style="width: 21rem; height: 9.85rem;">
 			<a href='user-home.php?name=<?=$name?>' style='text-decoration:none;'>
-			<div class="card-body mt-4 centerContent">
+			<div class="card-body centerContent">
 				<span>
 				<img class='profileCard me-2' src="images\<?=$pic?>" height="112px" width="112px" alt="goblin" style="margin-top: 10px;">
 				<div style="float:right;"> 

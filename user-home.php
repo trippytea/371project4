@@ -85,6 +85,16 @@ if ($postresult) {
     }
 }
 
+# get friend count
+$friendResult = $db->query("SELECT count(friendId) as total FROM friends WHERE username = '$name'");
+if ($friendResult) {
+    $rows = mysqli_fetch_assoc($friendResult);
+    if ($rows) {
+    	$friendTotal = $rows['total'];
+		$friendTotal = $friendTotal -1; 
+    }
+}
+
 #insert post from submission
 if (isset ($_POST['submit'])) {
 	$name=$_GET['name'];
@@ -226,15 +236,17 @@ $userPosts = function($db,$pic,$name) {
 		<div class="col-12 col-md-6 col-lg-4 order-1 order-md-1 order-lg-1 mb-2  centerContent">
             <div class="card mt-0 mt-lg-2 userBox" style="width: 21rem; height: 9.85rem;">
 			<a href='index.php' style='text-decoration:none;'>
-			<div class="card-body mt-4 centerContent">
+			<div class="card-body centerContent">
 				<span>
 				<img class='profileCard me-2' src="images\<?=$pic?>" height="112px" width="112px" alt="goblin" style="margin-top: 10px;">
 				<div style="float:right;"> 
-						<p style="color: #e9f6f1; letter-spacing:.75px; white-space:nowrap; display:inline-block;">
+						<p style="color: #e9f6f1; letter-spacing:.75px; white-space:nowrap; display:inline-block; margin-top: -7px;">
 						<strong><?=$firstName." ".$lastName?></strong><br>
 							<strong><?=$name?></strong><br>
 							<strong>Posts: <?=$postTotal?></strong><br>
-							<strong>Likes: <?=$likeTotal?></strong>
+							<strong>Likes: <?=$likeTotal?></strong><br>
+							<strong>Friends: <?=$friendTotal?></strong>
+
 						</p>
 					</div>
 					</span>
