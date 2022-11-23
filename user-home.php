@@ -1,10 +1,3 @@
-<?php 
-include 'db.php';
-include 'nav.php';
-ensure_logged_in();
-?>
-<!--php ends-->
-
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -27,7 +20,26 @@ ensure_logged_in();
 	<!-- custom CSS Stylesheet -->	  
     <link rel="stylesheet" type="text/css" href="styles.css";>
 </head>
-<?php
+
+<?php 
+include 'db.php';
+include 'nav.php';
+ensure_logged_in();
+#insert like submission
+if (isset ($_GET['postId'])) {
+	$getpostId = $_GET['postId'];
+	$userCheck = $_SESSION['user'];
+	$likeCheckResult = $db->query("SELECT * FROM postlike WHERE postId = '$getpostId' and likedBy = '$userCheck'");
+	if ($likeCheckResult) {
+		if ($rows = mysqli_fetch_assoc($likeCheckResult)) {
+			$unlikeResult = $db->query("DELETE FROM postlike WHERE postId = '$getpostId' and likedBy = '$userCheck'");
+		} else {
+			$postLikeStmnt = $db->prepare("INSERT INTO postlike(postId, likedBy) VALUES (?,?)");
+			$postLikeStmnt->bind_param("ss", $getpostId, $_SESSION['user']);
+			$postLikeStmnt->execute();
+		}
+	}
+} 
 
 # get profile pic
 $name = $_GET['name'];
@@ -94,30 +106,101 @@ $createPost = function ($name) {
 	echo " <div class='card-body'>
 				<h2>Create Post </h2>
 				<form method='post' action='user-home.php?name=$name' class='text-end'> 
-					<input type='text' name='newPost' id='newPost' class='card-body w-100' placeholder='Got something to say?'>	
+					<input type='text' name='newPost' id='newPost' class='card-body w-100' placeholder='Got something to say?'
+					style='height:50px;'>	
 					<button class='btn-primary btn-lg btn-block mt-2 ' type='submit' name='submit'>Post</button>
 				</form>
 		</div>";
 	}
 };
 
+#insert comment
+if (isset ($_POST['commentBtn'])) {
+	$comment = $_POST['comment']; 
+	if($_POST['comment'] != '') {
+		$postId = $_POST['postId'];
+		echo "<pre>".$comment."</pre>";
+		echo "<pre>".$postId."</pre>";
+		#date_default_timezone_set("America/Chicago");
+		#$date = date('Y/m/d h:i:s');
+		$commentStmnt = $db->prepare("INSERT INTO comment(commentContent, postId, username) VALUES (?,?,?)");
+		$commentStmnt->bind_param("sss",$comment,$postId,$_SESSION['user']);
+		$commentStmnt->execute();
+		header("location: user-home.php?name=$name");
+		exit();		
+}
+	else {};
+}
+
 $userPosts = function($db,$pic,$name) {
 	$postQ = mysqli_query($db, "SELECT * FROM post WHERE username = '$name' ORDER BY postId DESC");
+	echo "<div class='mx-4'>
+		  <h2 class='mb-1'>$name's Posts</h2>";
 
 	while($row=mysqli_fetch_array($postQ)){
 		$postId = $row['postId'];
-		echo "
-				<div class='p-2 w-75'>
+		
+		echo "	
 				<div><img class='profileCard mx-3' src='images/".$pic."
-				'height=auto; width=50px; alt='goblin' style='margin-top:10px; float:left;'></div>
-				<div class='mt-2' style='overflow:hidden';>
-				Posted by ".$name." ".calculate_time_span($row['date'])."<br>
-					$row[postContent]
-					<a href='user-home.php?postId=".$postId."&name=".$name."'><button type='button' class= 'btn btn-sm btn-success'>Like</button></a>
-					</div>
-				</div>";
-		}
-};
+					'height=auto; width=50px; alt='goblin' style='margin-top:10px; float:left;'></div>
+				<div class='my-3' style='overflow:hidden; width:75%';>
+					Posted by ".$name." ".calculate_time_span($row['date'])."<br>$row[postContent]<br>
+					";
+				# get like count for the post
+						$sql = "SELECT count(likeId) as total FROM postlike WHERE postId = '$postId'";
+						$likePostResult = mysqli_query($db, $sql);
+						if ($likePostResult) {
+							$likePostRow = mysqli_fetch_assoc($likePostResult);
+							if ($likePostRow) {
+								$likePostCount = $likePostRow['total'];
+					#like button
+						echo "<a href='user-home.php?postId=$postId&name=$name'><button type='button'
+								class='btn btn-sm btn-success'>Like ($likePostCount)</button></a>
+								";
+							}
+						}
+						$sql = "SELECT count(commentId) as total FROM comment WHERE postId = '$postId'";
+						$commentCountResult = mysqli_query($db, $sql);
+						if ($commentCountResult) {
+							$commentCountRow = mysqli_fetch_assoc($commentCountResult);
+							if ($commentCountRow) {
+								$commentCount = $commentCountRow['total'];
+							}
+						}
+							#comment form
+							echo "
+							<form method='post' action='user-home.php?name=$name' class='d-inline' >
+							<button type='submit' class='btn btn-sm btn-success' name='commentBtn' id='commentBtn' 
+									value='submit'>Comment ($commentCount)</button>
+							<input type='text' name='comment' id='comment' maxlength='60' style='width:250px;' 
+								placeholder=' Add a comment' required></input>
+							<input type='hidden' value='$postId' name='postId' id='postId'></input>
+							</form></div>";	
+					
+					#comment logic
+					$commentsql = "SELECT * FROM comment WHERE postId = '$postId'";
+					$commentResult = mysqli_query($db, $commentsql);
+					if ($commentResult) {
+						$commentRow = mysqli_fetch_all($commentResult);
+							for ($i=0; $i < count($commentRow); $i++) {
+							$comment = $commentRow[$i][1];
+							$commentUser = $commentRow[$i][3];
+
+							$commentPicSql = "SELECT profilePic FROM users WHERE username = '$commentUser'";
+							$commentPicResult = mysqli_query($db, $commentPicSql);
+							$commentPicRow = mysqli_fetch_assoc($commentPicResult);
+							if ($commentPicRow) {
+								$commentPic = $commentPicRow['profilePic'];
+							echo "<div style='margin-left:120px; margin-top:1%;'><img src='images/$commentPic' width='25px' class='me-1'>
+								<a href='user-home.php?name=$commentUser' style='text-decoration:none;'>".$commentUser."</a>
+								  <div style='margin-left:36px;'>$comment</div></div>";
+							}
+					} echo"<br>";	
+				}				
+					
+				}
+				echo"</div>";
+			}
 
 ?>
 
@@ -148,18 +231,18 @@ $userPosts = function($db,$pic,$name) {
 		<!--post section-->
 		<div class='col-12 col-md-6 col-lg-8 order-2 order-md-2 order-lg-2 text-center text-lg-start'>
 		<?=$createPost($name)?>
-		<h2 class='mb-1 mx-4'><?=$name?>'s Posts</h2>
+		
 		<?=$userPosts($db,$pic,$name)?>
 		</div> <!--row end-->
 	</div>
 	<!-- row ends -->
 	</div>
-</div> <!--container end-->
+
 
 
 
 <!-- Bootstrap JS Bundle with Popper **needed for collapsable nav** -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
-<footer class="centerContent" style='width:100%;'>Copyright &copy 2022 The Goblin Den</footer>
+<footer class="centerContent userFooter" style='width:100%;'>Copyright &copy 2022 The Goblin Den</footer>
 </html>
