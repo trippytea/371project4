@@ -31,7 +31,8 @@ if (isset( $_POST['submit'] )) {
             $password_confirm = $_POST['password_confirm'];
 
             if ($password == $password_confirm) {
-
+                
+                
                 $goblinPics = array("goblin1.png", "goblin2.png", "goblin3.png", "goblin4.png", "goblin5.png");
                 $randomIndex = rand(0, 4);
                 $goblin = $goblinPics[$randomIndex];
@@ -40,6 +41,16 @@ if (isset( $_POST['submit'] )) {
                 $registerPrep = $db -> prepare("INSERT INTO users(username, fName, lName, email, password, profilePic) VALUES (?, ?, ?, ?, ?, ?)");
                 $registerPrep -> bind_param("ssssss", $username, $firstName, $lastName, $email, $password_hash, $goblin);
                 $registerPrep -> execute();
+
+                $sql =  "INSERT INTO friends (friendUsername, username) VALUES ('$username','$username');";
+                $sql .= "INSERT INTO friends (friendUsername, username) VALUES ('Grugg','$username');";
+                $sql .= "INSERT INTO friends (friendUsername, username) VALUES ('Krugg','$username');";
+                $sql .= "INSERT INTO friends (friendUsername, username) VALUES ('Goblin_Tom','$username');";
+                $sql .= "INSERT INTO friends (friendUsername, username) VALUES ('$username','Grugg');";
+                $sql .= "INSERT INTO friends (friendUsername, username) VALUES ('$username','Krugg');";
+                $sql .= "INSERT INTO friends (friendUsername, username) VALUES ('$username','Goblin_Tom');";
+                $autoFriendsprep = mysqli_multi_query($db, $sql);
+
                 header("location: register.php?newUserSuccess");
                 exit();
             }
