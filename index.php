@@ -15,8 +15,6 @@
 	<!-- Font Awesome icon library -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
- 	<!--<link rel="stylesheet" type="text/css" href="css\bootstrap.css"> if wanted offline-->
-
 	<!-- custom CSS Stylesheet -->	  
     <link rel="stylesheet" type="text/css" href="styles.css";>
 </head>
@@ -41,7 +39,6 @@ if (isset ($_GET['postId'])) {
 		}
 	}
 } 
-
 
 # get profile pic
 $name = $_SESSION['user'];
@@ -104,19 +101,19 @@ if (isset ($_POST['submit'])) {
 
 #insert comment
 if (isset ($_POST['commentBtn'])) {
-	$comment = $_POST['comment'];
-	$postId = $_POST['postId'];
-	echo "<pre>".$comment."</pre>";
-	echo "<pre>".$postId."</pre>";
-	#date_default_timezone_set("America/Chicago");
-	#$date = date('Y/m/d h:i:s');
-	$commentStmnt = $db->prepare("INSERT INTO comment(commentContent, postId, username) VALUES (?,?,?)");
-	$commentStmnt->bind_param("sss",$comment,$postId,$_SESSION['user']);
-	$commentStmnt->execute();
-	header("location: index.php");
-	exit();
+	$comment = $_POST['comment']; 
+	if($_POST['comment'] != '') {
+		$postId = $_POST['postId'];
+		#date_default_timezone_set("America/Chicago");
+		#$date = date('Y/m/d h:i:s');
+		$commentStmnt = $db->prepare("INSERT INTO comment(commentContent, postId, username) VALUES (?,?,?)");
+		$commentStmnt->bind_param("sss",$comment,$postId,$_SESSION['user']);
+		$commentStmnt->execute();
+		header("location: index.php");
+		exit();		
 }
-
+	else {};
+}
 
 ?>
 <!--php ends-->
@@ -150,7 +147,8 @@ if (isset ($_POST['commentBtn'])) {
 		<div class="card-body">
 		<h2>Create Post </h2>
 					<form method='post' action="index.php" class='text-end'> 
-						<input type="text" name='newPost' id='newPost' class="card-body w-100"  placeholder="Got something to say?">	
+						<input type="text" name='newPost' id='newPost' class="card-body w-100"  placeholder="Got something to say?"
+						style='height:50px;'>	
 						<button class="btn-primary btn-lg btn-block mt-2 " type="submit" name='submit'>Post</button>
 					</form>
 			</div>
@@ -181,7 +179,7 @@ if (isset ($_POST['commentBtn'])) {
 												echo "
 												<div class='p-2 w-75'>
 												<div><img class='profileCard mx-3' src='images/".$postpic."
-												'height=auto; width=50px; alt='goblin' style='margin-top:10px; float:left;'></div>
+													'height=auto; width=50px; alt='goblin' style='margin-top:10px; float:left;'></div>
 												<div class='mt-2' style='overflow:hidden';>
 												Posted by <a href='user-home.php?name=$postUsername' style='text-decoration:none;'>".$postUsername."
 												</a> ".calculate_time_span($postDate)."<br>
@@ -195,9 +193,9 @@ if (isset ($_POST['commentBtn'])) {
     														$likePostRow = mysqli_fetch_assoc($likePostResult);
     														if ($likePostRow) {
     															$likePostCount = $likePostRow['total'];
-																echo "<a href='index.php?postId=$postId'><button type='button' class='btn btn-sm btn-success'>
-																Like ($likePostCount)</button></a>";
-
+															#like button
+																echo "<a href='index.php?postId=$postId'><button type='button'
+																		class='btn btn-sm btn-success'>Like ($likePostCount)</button></a>";
    															}
     													}
 														$sql = "SELECT count(commentId) as total FROM comment WHERE postId = '$postId'";
@@ -210,11 +208,11 @@ if (isset ($_POST['commentBtn'])) {
     													}
     										#comment form
 												echo "
-												<form method='post' action='index.php' class='d-inline'>
-												<button class='btn btn-sm btn-success' name='commentBtn' id='commentBtn' 
+												<form method='post' action='index.php' class='d-inline' >
+												<button type='submit' class='btn btn-sm btn-success' name='commentBtn' id='commentBtn' 
 													value='submit'>Comment ($commentCount)</button>
 												<input type='text' name='comment' id='comment' maxlength='60' style='width:250px;' 
-													placeholder=' Add a comment'></input>
+													placeholder=' Add a comment' required></input>
 												<input type='hidden' value='$postId' name='postId' id='postId'></input>
 												</form>	
 												</div>
