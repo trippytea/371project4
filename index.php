@@ -196,15 +196,23 @@ if (isset ($_POST['commentBtn'])) {
     														if ($likePostRow) {
     															$likePostCount = $likePostRow['total'];
 																echo "<a href='index.php?postId=$postId'><button type='button' class='btn btn-sm btn-success'>
-																Like $likePostCount</button></a>";
+																Like ($likePostCount)</button></a>";
 
+   															}
+    													}
+														$sql = "SELECT count(commentId) as total FROM comment WHERE postId = '$postId'";
+														$commentCountResult = mysqli_query($db, $sql);
+														if ($commentCountResult) {
+    														$commentCountRow = mysqli_fetch_assoc($commentCountResult);
+    														if ($commentCountRow) {
+    															$commentCount = $commentCountRow['total'];
    															}
     													}
     										#comment form
 												echo "
 												<form method='post' action='index.php' class='d-inline'>
 												<button class='btn btn-sm btn-success' name='commentBtn' id='commentBtn' 
-													value='submit'>Comment</button>
+													value='submit'>Comment ($commentCount)</button>
 												<input type='text' name='comment' id='comment' maxlength='60' style='width:250px;' 
 													placeholder=' Add a comment'></input>
 												<input type='hidden' value='$postId' name='postId' id='postId'></input>
