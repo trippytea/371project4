@@ -21,6 +21,21 @@
     <link rel="stylesheet" type="text/css" href="styles.css";>
 </head>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+
+    if (localStorage.getItem("my_app_name_here-quote-scroll") != null) {
+        $(window).scrollTop(localStorage.getItem("my_app_name_here-quote-scroll"));
+    }
+
+    $(window).on("scroll", function() {
+        localStorage.setItem("my_app_name_here-quote-scroll", $(window).scrollTop());
+    });
+
+  });
+</script>
+
 <?php 
 include 'db.php';
 include 'nav.php';
@@ -144,8 +159,7 @@ $userPosts = function($db,$pic,$name) {
 				<div><img class='profileCard mx-3' src='images/".$pic."
 					'height=auto; width=50px; alt='goblin' style='margin-top:10px; float:left;'></div>
 				<div class='my-3' style='overflow:hidden; width:75%';>
-					Posted by ".$name." ".calculate_time_span($row['date'])."<br>$row[postContent]<br>
-					";
+					Posted by ".$name." ".calculate_time_span($row['date'])."<br>$row[postContent]<br>";
 				# get like count for the post
 						$sql = "SELECT count(likeId) as total FROM postlike WHERE postId = '$postId'";
 						$likePostResult = mysqli_query($db, $sql);
