@@ -131,7 +131,7 @@ $createPost = function ($name) {
 	echo " <div class='card-body'>
 				<h2>Create Post </h2>
 				<form method='post' action='user-home.php?name=$name' class='text-end'> 
-					<input type='text' name='newPost' id='newPost' class='card-body w-100' placeholder='Got something to say?'
+					<input type='text' name='newPost' id='newPost' class='card-body w-100' placeholder=' Got something to say?'
 					style='height:50px;'>	
 					<button class='btn-primary btn-lg btn-block mt-2 ' type='submit' name='submit'>Post</button>
 				</form>
@@ -236,11 +236,11 @@ $userPosts = function($db,$pic,$name) {
 		<div class="col-12 col-md-6 col-lg-4 order-1 order-md-1 order-lg-1 mb-2  centerContent">
             <div class="card mt-0 mt-lg-2 userBox" style="width: 21rem; height: 9.85rem;">
 			<a href='index.php' style='text-decoration:none;'>
-			<div class="card-body centerContent">
+			<div class="card-body centerContent my-4">
 				<span>
 				<img class='profileCard me-2' src="images\<?=$pic?>" height="112px" width="112px" alt="goblin" style="margin-top: 10px;">
 				<div style="float:right;"> 
-						<p style="color: #e9f6f1; letter-spacing:.75px; white-space:nowrap; display:inline-block; margin-top: -7px;">
+						<p class='info mt-2' style="color: #e9f6f1; letter-spacing:.75px; white-space:nowrap; display:inline-block; margin-top: -7px;">
 						<strong><?=$firstName." ".$lastName?></strong><br>
 							<strong><?=$name?></strong><br>
 							<strong>Posts: <?=$postTotal?></strong><br>

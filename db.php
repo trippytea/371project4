@@ -35,9 +35,9 @@ function ensure_logged_in() {
     $datetime1 = new DateTime(); // Today's Date/Time
     $datetime2 = new DateTime($date);
     $interval = $datetime1->diff($datetime2);
-    $days = $interval->format("%D");
-    $hours = $interval->format("%H");
-    $minutes = $interval->format("%I");
+    $days = $interval->format("%d");
+    $hours = $interval->format("%h");
+    $minutes = $interval->format("%i");
 
     if ($days < 1 && $hours < 1 && $minutes < 1) {
       return "Less than a minute ago.";
@@ -48,23 +48,23 @@ function ensure_logged_in() {
     }
     
     elseif ($days < 1 && $hours < 1) {
-        return substr($minutes,1,)." minutes ago.";
+        return $minutes." minutes ago.";
     }
 
-    elseif ($days <1 && $hours = 1) {
-      return "1 hour ".substr($minutes,1,)." minutes ago.";
+    elseif ($days <1 && $hours == 1) {
+      return "1 hour ".$minutes." minutes ago.";
     }
 
     elseif ($days <1 && $hours >= 1) {
-      return substr($hours,1,) ." hours ".substr($minutes,1,)." minutes ago.";
+      return $hours ." hours ".$minutes." minutes ago.";
     }
 
-    elseif ($days = 1){
-      return "1 day ago.";
+    elseif ($days == 1) {
+      return "1 day ago";
     }
-    
+
     else{
-      return substr($days,1,)." days ago.";
+      return "$days days ago.";
     }
 }
 
