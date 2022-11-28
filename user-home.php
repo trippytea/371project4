@@ -240,7 +240,7 @@ $userPosts = function($db,$pic,$name) {
 				<span>
 				<img class='profileCard me-2' src="images\<?=$pic?>" height="112px" width="112px" alt="goblin" style="margin-top: 10px;">
 				<div style="float:right;"> 
-						<p class='info mt-2' style="color: #e9f6f1; letter-spacing:.75px; white-space:nowrap; display:inline-block; margin-top: -7px;">
+						<p class='info' style="color: #e9f6f1; letter-spacing:.75px; white-space:nowrap; display:inline-block; margin-top: -10px;">
 						<strong><?=$firstName." ".$lastName?></strong><br>
 							<strong><?=$name?></strong><br>
 							<strong>Posts: <?=$postTotal?></strong><br>
