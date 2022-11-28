@@ -36,7 +36,7 @@ function ensure_logged_in() {
     $datetime2 = new DateTime($date);
     $interval = $datetime1->diff($datetime2);
     $days = $interval->format("%d");
-    $hours = $interval->format("%h");
+    $hours = $interval->format("%h") - 12;
     $minutes = $interval->format("%i");
 
     if ($days < 1 && $hours < 1 && $minutes < 1) {
